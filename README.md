@@ -9,10 +9,10 @@ This repository is now prepared for a beginner-friendly Jenkins flow that:
 
 The app stays simple:
 
-- local development still works with `/api/hello` and `/api/users`
-- Kubernetes sets `APP_BASE_PATH=/HelloApp`, so the public URLs become:
-  - `https://nauthappstest.tech/HelloApp/api/hello`
-  - `https://nauthappstest.tech/HelloApp/api/users`
+- local development uses `/apps` as the base route
+- Kubernetes sets `APP_BASE_PATH=/apps`, so the public URLs become:
+  - `https://nauthappstest.tech/apps/api/hello`
+  - `https://nauthappstest.tech/apps/api/users`
 
 ## Current App State
 
@@ -20,9 +20,9 @@ The app stays simple:
 - Java `21`
 - HTTP port `8080`
 - Endpoints:
-  - `GET /api/hello`
-  - `GET /api/users`
-  - `GET /api/users/{id}`
+  - `GET /apps/api/hello`
+  - `GET /apps/api/users`
+  - `GET /apps/api/users/{id}`
 - Docker image built from the root `Dockerfile`
 
 ## Feasibility
@@ -45,7 +45,7 @@ If the EKS path remains unstable in your LocalStack instance, the closest reliab
 
 ## What Was Added Here
 
-- `server.servlet.context-path=${APP_BASE_PATH:}` so Kubernetes can publish `/HelloApp/...` without breaking local development
+- `server.servlet.context-path=${APP_BASE_PATH:/apps}` so the app always uses `/apps` by default
 - `Jenkinsfile` for `git push -> Jenkins -> test -> build -> push -> deploy`
 - `scripts/deploy-to-localstack-eks.sh` for the CLI deployment workflow
 - `k8s/*.template.yaml` Kubernetes manifests for namespace, deployment, service, and ingress
@@ -85,7 +85,7 @@ After a GitHub push:
 
 ## Required Infra Changes Outside This Repo
 
-These are required if you want the app reachable in a public browser at `https://nauthappstest.tech/HelloApp/...`.
+These are required if you want the app reachable in a public browser at `https://nauthappstest.tech/apps/...`.
 
 ### 1) Azure VM LocalStack config
 
@@ -107,7 +107,7 @@ Why:
 
 ### 2) Azure VM Nginx routing
 
-In the same Azure VM repo, `nauthappstest.tech` should proxy `/HelloApp/` to the LocalStack EKS ingress port:
+In the same Azure VM repo, `nauthappstest.tech` should proxy `/apps/` to the LocalStack EKS ingress port:
 
 - `http://127.0.0.1:8081`
 
@@ -122,7 +122,7 @@ In `localstack-terraform-jenkins`:
 
 ## Local Manual Run
 
-Local development remains unchanged:
+Local development now uses `/apps` as the base path by default:
 
 ```bash
 ./mvnw spring-boot:run
@@ -130,8 +130,8 @@ Local development remains unchanged:
 
 Then use:
 
-- `http://localhost:8080/api/hello`
-- `http://localhost:8080/api/users`
+- `http://localhost:8080/apps/api/hello`
+- `http://localhost:8080/apps/api/users`
 
 ## Notes
 

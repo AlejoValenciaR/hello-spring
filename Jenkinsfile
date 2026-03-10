@@ -18,12 +18,12 @@ pipeline {
     LS_ENDPOINT_URL       = credentials('LS_ENDPOINT_URL')
 
     APP_NAME         = 'hello-spring'
-    APP_BASE_PATH    = '/HelloApp'
+    APP_BASE_PATH    = '/apps'
     ECR_REPOSITORY   = 'hello-spring'
     EKS_CLUSTER_NAME = 'localstack-eks-cluster'
     EKS_NODEGROUP_NAME = 'localstack-eks-node-group'
     K8S_NAMESPACE    = 'hello-spring'
-    PUBLIC_APP_URL   = 'https://nauthappstest.tech/HelloApp/api/hello'
+    PUBLIC_APP_URL   = 'https://nauthappstest.tech/apps/api/hello'
   }
 
   stages {
@@ -37,7 +37,7 @@ pipeline {
       steps {
         sh '''
           set -euo pipefail
-          chmod +x mvnw scripts/deploy-to-localstack-eks.sh
+          chmod +x mvnw scripts/deploy-to-localstack-eks.sh scripts/verify-localstack-eks.sh
           ./mvnw -B test
         '''
       }
@@ -58,9 +58,8 @@ pipeline {
         sh '''
           set -euo pipefail
           export KUBECONFIG="${WORKSPACE}/.kube/config"
-          kubectl -n "${K8S_NAMESPACE}" get pods
-          kubectl -n "${K8S_NAMESPACE}" get service "${APP_NAME}"
-          kubectl -n "${K8S_NAMESPACE}" get ingress "${APP_NAME}"
+          chmod +x scripts/verify-localstack-eks.sh
+          ./scripts/verify-localstack-eks.sh
         '''
       }
     }

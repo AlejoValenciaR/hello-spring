@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
-@ComponentScan({"com.alejandro.hello", "com.alejandro.users", "com.alejandro.hello_spring"})
+@ComponentScan("com.alejandro")
 public class HelloSpringApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(HelloSpringApplication.class, args);

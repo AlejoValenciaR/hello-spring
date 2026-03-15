@@ -52,4 +52,15 @@ class HelloSpringApplicationTests {
 			.andExpect(content().contentTypeCompatibleWith("text/html"))
 			.andExpect(content().string(org.hamcrest.Matchers.containsString("User with id: 2")));
 	}
+
+	@Test
+	void cvRouteRendersHtml() throws Exception {
+		mockMvc.perform(get("/apps/portfolio/alejandro").contextPath("/apps"))
+			.andExpect(status().isOk())
+			.andExpect(content().contentTypeCompatibleWith("text/html"))
+			.andExpect(content().string(org.hamcrest.Matchers.containsString("Alejandro Valencia - Senior Backend Developer")))
+			.andExpect(content().string(org.hamcrest.Matchers.containsString("Alejandro Valencia")))
+			.andExpect(content().string(org.hamcrest.Matchers.containsString("Senior Backend Developer")))
+			.andExpect(content().string(org.hamcrest.Matchers.containsString("Java & Python Solutions")));
+	}
 }

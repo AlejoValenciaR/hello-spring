@@ -1,0 +1,86 @@
+{
+  "eyebrow": "Experience",
+  "titlePrimary": "Professional",
+  "titleSecondary": "experience and",
+  "highlightWord": "impact",
+  "items": [
+    {
+      "role": "Technical Lead, Backend & Data Engineering",
+      "company": "CINTE GROUP S.A. (Experian Outsourcing)",
+      "location": "Cali, Colombia",
+      "period": "2024 - 2025",
+      "bullets": [
+        "Led the full lifecycle of a Salesforce Marketing Cloud implementation, including API and SFTP integrations with AWS and migration of internal customer data into contactability models.",
+        "Led the migration from on-premises MongoDB to Amazon DocumentDB and delivered the AWS infrastructure using Terraform, aligned with governance and security requirements.",
+        "Built a large AWS-based architecture and the initial microservices backbone behind API Gateway, using services such as Lambda, Step Functions, ECS, EKS, Glue, EventBridge, SQS, S3, and CloudWatch.",
+        "Implemented the Ascend transaction monitoring and BI solution and delivered a national encryption plus anonymization model to protect customer identity and enable secure cross-team data exchange."
+      ]
+    },
+    {
+      "role": "Software Consultant",
+      "company": "Independent",
+      "location": "Cali, Colombia",
+      "period": "2023 - 2024",
+      "bullets": [
+        "Delivered software analysis and development consulting for custom initiatives with emphasis on backend implementation, architecture thinking, and practical problem solving."
+      ]
+    },
+    {
+      "role": "Backend Software Engineer",
+      "company": "Bold",
+      "location": "Cali, Colombia",
+      "period": "2023",
+      "bullets": [
+        "Delivered backend services for low-balance accounts and microloans in the Bold CF application.",
+        "Developed Python and Java domain models across multiple microservices following Domain-Driven Design principles and supported production environments backed by DynamoDB.",
+        "Worked with cloud-native architectures across AWS, GCP, and Azure, combining SQL and NoSQL persistence, API patterns, technical documentation, and test design for a reliable banking product."
+      ]
+    },
+    {
+      "role": "Tech Lead & Senior Developer Analyst",
+      "company": "Banco Union",
+      "location": "Cali, Colombia",
+      "period": "2022 - 2023",
+      "bullets": [
+        "Led a strategic technology and compliance program that supported the bank operating license process and the rollout of a new Core Banking platform.",
+        "Built the inter-application communication backbone from scratch, including an API Gateway and mediation layer with more than 94 REST and SOAP services plus a translation API for legacy-to-modern integration.",
+        "Standardized more than 130 ETL jobs and reports, produced technical standards for regulatory and audit requirements, and contributed ETL modernization using AWS Glue, Azure Data Factory, and GoAnywhere.",
+        "Delivered risk-profile and identity-validation capabilities for SARLAFT, optimized Pentaho and GoAnywhere pipelines, improved WildFly stability, and supported reporting for operations and collections."
+      ]
+    },
+    {
+      "role": "Senior Developer Analyst",
+      "company": "Banco de Occidente",
+      "location": "Cali, Colombia",
+      "period": "2021 - 2022",
+      "bullets": [
+        "Built four internal applications, two in Java and two in Python with Flask and Django, improving reporting and decision-making by 30% to 40% for business units.",
+        "Optimized five production ETL pipelines involved in the loan portfolio closing process, reducing close time by 1.5 hours.",
+        "Designed and implemented the national encryption model and an anonymization replica database, strengthening customer identity protection and secure information exchange.",
+        "Contributed to Wompi integration, improved FLEXCUBE data processing, and acted as an AWS, Terraform, and Jenkins reference for modernization and migration initiatives."
+      ]
+    },
+    {
+      "role": "Professional Analyst",
+      "company": "Banco de Occidente",
+      "location": "Cali, Colombia",
+      "period": "2019 - 2021",
+      "bullets": [
+        "Designed the full technology architecture to migrate an active loan portfolio product to FLEXCUBE.",
+        "Built 15 ETL pipelines with IBM DataStage and optimized ODS queries and ETL processes to improve data management and decision-making.",
+        "Led an 11-person team as Scrum Master and contributed to a high-impact migration with 99.8% success, covering 39,000 customers and 80,000 loans."
+      ]
+    },
+    {
+      "role": "Data Analyst",
+      "company": "Innovar Web",
+      "location": "Cali, Colombia",
+      "period": "2018 - 2019",
+      "bullets": [
+        "Normalized the application database to Third Normal Form and materially improved system performance.",
+        "Built a mathematical model that predicted database latency with 90% accuracy and helped identify low-performance conditions.",
+        "Raised daily transactions by 30% through database optimization and contributed to improved application stability and user experience."
+      ]
+    }
+  ]
+}

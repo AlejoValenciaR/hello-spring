@@ -132,6 +132,35 @@ function fitHeroTitleLine(element, maxWidth, minFontPx, allowScaleFallback) {
     }
 }
 
+function fitHeroTitleRow(heading, mainLine, accentLine, minMainFontPx, minAccentFontPx) {
+    if (!heading || !mainLine || !accentLine) {
+        return;
+    }
+
+    let mainFontSize = parseFloat(window.getComputedStyle(mainLine).fontSize);
+    let accentFontSize = parseFloat(window.getComputedStyle(accentLine).fontSize);
+
+    while (heading.scrollWidth > heading.clientWidth && accentFontSize > minAccentFontPx) {
+        accentFontSize -= 0.5;
+        accentLine.style.fontSize = `${accentFontSize}px`;
+    }
+
+    while (heading.scrollWidth > heading.clientWidth && mainFontSize > minMainFontPx) {
+        mainFontSize -= 0.5;
+        mainLine.style.fontSize = `${mainFontSize}px`;
+    }
+
+    if (heading.scrollWidth > heading.clientWidth) {
+        const headingStyles = window.getComputedStyle(heading);
+        const gap = parseFloat(headingStyles.columnGap || headingStyles.gap || '0');
+        const availableAccentWidth = Math.max(
+            heading.clientWidth - mainLine.getBoundingClientRect().width - gap,
+            140
+        );
+        fitHeroTitleLine(accentLine, availableAccentWidth, minAccentFontPx, true);
+    }
+}
+
 function updateHeroTitleFit() {
     const heading = document.querySelector('.cv-hero-title-secondary');
     const mainLine = heading?.querySelector('.cv-hero-title-secondary-main');
@@ -141,7 +170,6 @@ function updateHeroTitleFit() {
         return;
     }
 
-    const shouldFit = window.innerWidth <= 1199;
     mainLine.style.fontSize = '';
     mainLine.style.transform = '';
     mainLine.style.transformOrigin = '';
@@ -149,7 +177,8 @@ function updateHeroTitleFit() {
     accentLine.style.transform = '';
     accentLine.style.transformOrigin = '';
 
-    if (!shouldFit) {
+    if (window.innerWidth > 1199) {
+        fitHeroTitleRow(heading, mainLine, accentLine, 34, 28);
         return;
     }
 
@@ -160,6 +189,45 @@ function updateHeroTitleFit() {
     fitHeroTitleLine(accentLine, maxWidth, window.innerWidth <= 575 ? 11 : 12, true);
 }
 
+function fitExperienceRoleTitle(roleElement) {
+    if (!roleElement) {
+        return;
+    }
+
+    roleElement.style.fontSize = '';
+    roleElement.style.transform = '';
+    roleElement.style.transformOrigin = '';
+
+    const maxWidth = roleElement.clientWidth;
+    if (!maxWidth) {
+        return;
+    }
+
+    const getMaxHeight = () => {
+        const styles = window.getComputedStyle(roleElement);
+        const lineHeight = parseFloat(styles.lineHeight) || parseFloat(styles.fontSize) * 1.16;
+        return lineHeight * 2 + 2;
+    };
+
+    let currentFontSize = parseFloat(window.getComputedStyle(roleElement).fontSize);
+    let maxHeight = getMaxHeight();
+    while ((roleElement.scrollWidth > maxWidth || roleElement.scrollHeight > maxHeight) && currentFontSize > 10) {
+        currentFontSize -= 0.5;
+        roleElement.style.fontSize = `${currentFontSize}px`;
+        maxHeight = getMaxHeight();
+    }
+
+    if (roleElement.scrollWidth > maxWidth || roleElement.scrollHeight > maxHeight) {
+        const scaleX = Math.max(maxWidth / roleElement.scrollWidth, 0.82);
+        roleElement.style.transform = `scaleX(${scaleX})`;
+        roleElement.style.transformOrigin = 'left center';
+    }
+}
+
+function updateExperienceRoleFit() {
+    document.querySelectorAll('.cv-featured-role').forEach(fitExperienceRoleTitle);
+}
+
 const scheduleHeroTitleFit = () => {
     window.requestAnimationFrame(updateHeroTitleFit);
 };
@@ -167,8 +235,18 @@ const scheduleHeroTitleFit = () => {
 scheduleHeroTitleFit();
 window.addEventListener('resize', scheduleHeroTitleFit, { passive: true });
 
+const scheduleExperienceRoleFit = () => {
+    window.requestAnimationFrame(updateExperienceRoleFit);
+};
+
+scheduleExperienceRoleFit();
+window.addEventListener('resize', scheduleExperienceRoleFit, { passive: true });
+
 if (document.fonts && document.fonts.ready) {
-    document.fonts.ready.then(scheduleHeroTitleFit);
+    document.fonts.ready.then(() => {
+        scheduleHeroTitleFit();
+        scheduleExperienceRoleFit();
+    });
 }
 
 if (window.ResizeObserver) {
@@ -177,6 +255,11 @@ if (window.ResizeObserver) {
         const heroTitleObserver = new ResizeObserver(scheduleHeroTitleFit);
         heroTitleObserver.observe(heroResizeTarget);
     }
+
+    document.querySelectorAll('.cv-experience-top').forEach((experienceTop) => {
+        const experienceObserver = new ResizeObserver(scheduleExperienceRoleFit);
+        experienceObserver.observe(experienceTop);
+    });
 }
 
 // UPDATE: I was able to get this working again... Enjoy!

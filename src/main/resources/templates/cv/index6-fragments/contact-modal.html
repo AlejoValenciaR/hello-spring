@@ -62,10 +62,24 @@
           <button type="button" class="cv-secondary-btn cv-contact-modal-secondary" data-contact-back>Back</button>
         </div>
       </form>
+    </section>
 
-      <div class="cv-contact-config-guide">
-        <strong>Backend setup guide</strong>
-        <p>Configure <span>MAIL_USERNAME</span>, <span>MAIL_PASSWORD</span>, and <span>APP_CONTACT_MAIL_FROM</span> on the server. Gmail requires an App Password.</p>
+    <section class="cv-contact-modal-view" data-contact-view="result" hidden>
+      <div class="cv-contact-result" data-contact-result-state="success">
+        <div class="cv-contact-result-icon" data-contact-result-icon>
+          <i class="fa-solid fa-check"></i>
+        </div>
+        <span class="cv-contact-modal-kicker" data-contact-result-kicker>Message Sent</span>
+        <h3 data-contact-result-title>Your message was sent successfully.</h3>
+        <p class="cv-contact-modal-copy" data-contact-result-copy>Alejandro received your message and can now reply to your email directly.</p>
+
+        <div class="cv-contact-modal-actions cv-contact-modal-actions-form">
+          <button type="button" class="vl-btn1 cv-contact-modal-primary" data-contact-result-close>
+            Close
+            <img th:src="@{/ovro-index6-full/assets/img/icons/mail1.svg}" src="/ovro-index6-full/assets/img/icons/mail1.svg" alt="">
+          </button>
+          <button type="button" class="cv-secondary-btn cv-contact-modal-secondary" data-contact-result-retry hidden>Try Again</button>
+        </div>
       </div>
     </section>
   </div>

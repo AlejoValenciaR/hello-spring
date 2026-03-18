@@ -409,12 +409,20 @@ function initContactModal() {
     const externalLink = modal?.querySelector('[data-contact-external]');
     const openFormButton = modal?.querySelector('[data-contact-open-form]');
     const backButton = modal?.querySelector('[data-contact-back]');
+    const resultView = modal?.querySelector('[data-contact-view="result"]');
     const form = modal?.querySelector('#cv-contact-form');
     const status = modal?.querySelector('[data-contact-form-status]');
     const submitButton = modal?.querySelector('[data-contact-submit]');
     const submitLabel = modal?.querySelector('.cv-contact-submit-label');
+    const resultContainer = modal?.querySelector('.cv-contact-result');
+    const resultKicker = modal?.querySelector('[data-contact-result-kicker]');
+    const resultTitle = modal?.querySelector('[data-contact-result-title]');
+    const resultCopy = modal?.querySelector('[data-contact-result-copy]');
+    const resultIcon = modal?.querySelector('[data-contact-result-icon]');
+    const resultCloseButton = modal?.querySelector('[data-contact-result-close]');
+    const resultRetryButton = modal?.querySelector('[data-contact-result-retry]');
 
-    if (!modal || !choiceView || !formView || !externalLink || !openFormButton || !backButton || !form || !status || !submitButton || !submitLabel || !triggers.length) {
+    if (!modal || !choiceView || !formView || !resultView || !externalLink || !openFormButton || !backButton || !form || !status || !submitButton || !submitLabel || !resultContainer || !resultKicker || !resultTitle || !resultCopy || !resultIcon || !resultCloseButton || !resultRetryButton || !triggers.length) {
         return;
     }
 
@@ -433,10 +441,14 @@ function initContactModal() {
 
     const setView = (viewName) => {
         const showChoice = viewName === 'choice';
+        const showForm = viewName === 'form';
+        const showResult = viewName === 'result';
         choiceView.hidden = !showChoice;
-        formView.hidden = showChoice;
+        formView.hidden = !showForm;
+        resultView.hidden = !showResult;
         choiceView.classList.toggle('is-active', showChoice);
-        formView.classList.toggle('is-active', !showChoice);
+        formView.classList.toggle('is-active', showForm);
+        resultView.classList.toggle('is-active', showResult);
     };
 
     const setStatus = (message, state) => {
@@ -496,6 +508,22 @@ function initContactModal() {
         submitLabel.textContent = isLoading ? 'Sending...' : 'Send Message';
     };
 
+    const setResultState = (state, message) => {
+        const success = state === 'success';
+        resultContainer.setAttribute('data-contact-result-state', state);
+        resultIcon.innerHTML = success
+            ? '<i class="fa-solid fa-check"></i>'
+            : '<i class="fa-solid fa-triangle-exclamation"></i>';
+        resultKicker.textContent = success ? 'Message Sent' : 'Message Not Sent';
+        resultTitle.textContent = success
+            ? 'Your message was sent successfully.'
+            : 'Your message could not be sent.';
+        resultCopy.textContent = message || (success
+            ? 'Alejandro received your message and can now reply to your email directly.'
+            : 'Please try again in a moment or use the external email option.');
+        resultRetryButton.hidden = success;
+    };
+
     const openModal = (trigger) => {
         previousFocus = document.activeElement;
         externalLink.setAttribute('href', trigger?.getAttribute('href') || defaultMailto);
@@ -549,6 +577,15 @@ function initContactModal() {
         openFormButton.focus();
     });
 
+    resultCloseButton.addEventListener('click', closeModal);
+
+    resultRetryButton.addEventListener('click', () => {
+        clearErrors();
+        setStatus('', '');
+        setView('form');
+        fields.fromEmail?.focus();
+    });
+
     externalLink.addEventListener('click', () => {
         closeModal();
     });
@@ -592,14 +629,17 @@ function initContactModal() {
                         setFieldError(fieldName, String(message));
                     });
                 }
-                setStatus(result.message || 'The message could not be sent. Please try again.', 'error');
+                setResultState('error', result.message || 'The message could not be sent. Please try again.');
+                setView('result');
                 return;
             }
 
             form.reset();
-            setStatus(result.message || 'Your message was sent successfully.', 'success');
+            setResultState('success', result.message || 'Your message was sent successfully.');
+            setView('result');
         } catch (error) {
-            setStatus('The request could not reach the server. Please try again.', 'error');
+            setResultState('error', 'The request could not reach the server. Please try again.');
+            setView('result');
         } finally {
             setLoading(false);
         }

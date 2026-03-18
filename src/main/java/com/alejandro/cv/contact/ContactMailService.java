@@ -5,6 +5,8 @@ import jakarta.mail.internet.MimeMessage;
 import java.nio.charset.StandardCharsets;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.MailException;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -17,22 +19,33 @@ public class ContactMailService {
 
     private static final DateTimeFormatter TIMESTAMP_FORMAT =
             DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss z");
+    private static final Logger log = LoggerFactory.getLogger(ContactMailService.class);
 
     private final JavaMailSender mailSender;
     private final String recipientEmail;
     private final String senderEmail;
+    private final String smtpHost;
 
     public ContactMailService(
             JavaMailSender mailSender,
             @Value("${app.contact.mail.to:alejo.valenciarivera@gmail.com}") String recipientEmail,
-            @Value("${app.contact.mail.from:}") String senderEmail) {
+            @Value("${app.contact.mail.from:}") String senderEmail,
+            @Value("${spring.mail.host:}") String smtpHost) {
         this.mailSender = mailSender;
         this.recipientEmail = recipientEmail;
         this.senderEmail = senderEmail;
+        this.smtpHost = smtpHost;
     }
 
     public void send(ContactMessageRequest request) throws MessagingException {
+        if (!StringUtils.hasText(smtpHost)) {
+            log.error("Mail delivery is not configured: spring.mail.host is empty.");
+            throw new IllegalStateException(
+                    "Mail delivery is not configured. Set MAIL_HOST together with MAIL_USERNAME and MAIL_PASSWORD.");
+        }
+
         if (!StringUtils.hasText(senderEmail)) {
+            log.error("Mail delivery is not configured: sender email is empty.");
             throw new IllegalStateException(
                     "Mail delivery is not configured. Set MAIL_USERNAME, MAIL_PASSWORD, and APP_CONTACT_MAIL_FROM.");
         }
@@ -50,6 +63,12 @@ public class ContactMailService {
         try {
             mailSender.send(mimeMessage);
         } catch (MailException ex) {
+            log.error(
+                    "Failed to send contact email via SMTP host '{}' from '{}' to '{}'.",
+                    smtpHost,
+                    senderEmail,
+                    recipientEmail,
+                    ex);
             throw new IllegalStateException(
                     "The message could not be sent right now. Check the configured SMTP credentials and try again.",
                     ex);

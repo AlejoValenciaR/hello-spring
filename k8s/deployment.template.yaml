@@ -21,6 +21,9 @@ spec:
           imagePullPolicy: Always
           ports:
             - containerPort: 8080
+          envFrom:
+            - configMapRef:
+                name: mail-config
           env:
             - name: APP_BASE_PATH
               value: "__APP_BASE_PATH__"

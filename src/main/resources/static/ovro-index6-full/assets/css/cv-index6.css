@@ -6,6 +6,23 @@
     color: #f4f7fb;
 }
 
+@media (hover: hover) and (pointer: fine) {
+    body.body1,
+    body.body1 * {
+        cursor: none !important;
+    }
+
+    .procus-cursor.cursor-contrast {
+        border-color: #041018;
+        box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.28);
+    }
+
+    .procus-cursor2.cursor-contrast {
+        background-color: #041018;
+        box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.28);
+    }
+}
+
 .main-hero-area5 .cv-main-column,
 .main-hero-area5 .cv-main-scroll {
     min-width: 0;
@@ -750,6 +767,623 @@
     text-align: center;
 }
 
+.skill-section-area .cv-skill-card-link {
+    display: block;
+    color: inherit;
+    text-decoration: none;
+    height: 100%;
+}
+
+.skill-section-area .cv-skill-card-link:hover {
+    color: inherit;
+}
+
+.skill-section-area .cv-skill-category-title {
+    margin: 18px 0 22px;
+    color: var(--ztc-text-text-1);
+    font-family: var(--ztc-family-font1);
+    font-size: clamp(1.2rem, 2vw, 1.55rem);
+    font-weight: var(--ztc-weight-semibold);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+.skill-section-area .skill-boxarea {
+    height: 100%;
+}
+
+.skill-section-area .skill-boxarea .icons {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+}
+
+.skill-section-area .cv-skill-logo {
+    width: 58px;
+    height: 58px;
+    object-fit: contain;
+}
+
+.skill-section-area .skill-boxarea p {
+    min-height: 42px;
+    line-height: 1.35;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.portfolio-section-area .cv-portfolio-card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 28px;
+    background: rgba(9, 18, 31, 0.78);
+    border: 1px solid rgba(120, 157, 196, 0.16);
+    border-radius: 16px;
+    box-shadow: 0 18px 38px rgba(0, 0, 0, 0.22);
+}
+
+.portfolio-section-area .cv-portfolio-image-trigger {
+    display: block;
+    width: 100%;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    text-align: left;
+    cursor: zoom-in;
+}
+
+.portfolio-section-area .cv-portfolio-card .img1 {
+    border-radius: 14px;
+}
+
+.portfolio-section-area .cv-portfolio-card .img1 img {
+    width: 100%;
+    aspect-ratio: 16 / 8;
+    object-fit: cover;
+}
+
+.portfolio-section-area .cv-portfolio-card:hover .img1 img {
+    transform: scale(1.04);
+}
+
+.portfolio-section-area .cv-portfolio-meta {
+    color: #90ddeb;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+.portfolio-section-area .cv-portfolio-card .cv-portfolio-title {
+    color: var(--ztc-text-text-1);
+    font-family: var(--ztc-family-font1);
+    font-size: clamp(1.35rem, 1.8vw, 1.7rem);
+    font-weight: var(--ztc-weight-semibold);
+    line-height: 1.22;
+    display: block;
+    margin: 0;
+}
+
+.portfolio-section-area .cv-portfolio-card p {
+    margin: 0;
+    color: rgba(244, 247, 251, 0.82);
+    font-size: 1rem;
+    line-height: 1.72;
+}
+
+.portfolio-section-area .cv-portfolio-endpoint-label {
+    display: inline-block;
+    color: rgba(144, 221, 235, 0.88);
+    font-size: 1.0rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.portfolio-section-area .portfolio-boxarea a.cv-portfolio-endpoint,
+.portfolio-section-area .cv-portfolio-endpoint {
+    display: block;
+    width: 100%;
+    padding: 12px 14px;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.05);
+    color: rgba(244, 247, 251, 0.9);
+    font-family: "Fira Code", "Consolas", monospace;
+    font-size: 1.0rem;
+    line-height: 1.4;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    text-decoration: none;
+    transition: border-color 0.2s ease, background 0.2s ease, color 0.2s ease;
+    border: 1px solid rgba(120, 157, 196, 0.14);
+    text-transform: none;
+    font-weight: 500;
+}
+
+.portfolio-section-area .portfolio-boxarea a.cv-portfolio-endpoint:hover,
+.portfolio-section-area .cv-portfolio-endpoint:hover {
+    color: #ffcf63;
+    background: rgba(255, 174, 0, 0.08);
+    border-color: rgba(255, 174, 0, 0.24);
+}
+
+.portfolio-section-area .cv-portfolio-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: auto;
+    padding-top: 24px;
+}
+
+.portfolio-section-area .cv-portfolio-card .cv-portfolio-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 18px;
+    border-radius: 999px;
+    background: var(--ztc-bg-btn-bg1);
+    color: #041018;
+    font-size: 0.95rem;
+    font-weight: var(--ztc-weight-semibold);
+    line-height: 1;
+}
+
+.portfolio-section-area .cv-portfolio-card .cv-portfolio-btn:hover {
+    color: #041018;
+    transform: translateY(-2px);
+}
+
+.cv-lightbox-open {
+    overflow: hidden;
+}
+
+.cv-contact-modal-open {
+    overflow: hidden;
+}
+
+.cv-portfolio-lightbox {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 28px;
+    background: rgba(2, 8, 15, 0.88);
+    backdrop-filter: blur(12px);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.25s ease, visibility 0.25s ease;
+    z-index: 10040;
+}
+
+.cv-portfolio-lightbox.is-open {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+.cv-portfolio-lightbox-shell {
+    position: relative;
+    width: min(92vw, 1320px);
+    height: min(88vh, 920px);
+    padding: 72px 22px 22px;
+    border-radius: 24px;
+    background: rgba(7, 16, 27, 0.96);
+    border: 1px solid rgba(255, 174, 0, 0.22);
+    box-shadow: 0 32px 80px rgba(0, 0, 0, 0.38);
+}
+
+.cv-portfolio-lightbox-close {
+    position: absolute;
+    top: 18px;
+    right: 18px;
+    width: 48px;
+    height: 48px;
+    border: 0;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.08);
+    color: #f4f7fb;
+    font-size: 1.7rem;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.cv-portfolio-lightbox-toolbar {
+    position: absolute;
+    top: 18px;
+    left: 18px;
+    display: flex;
+    gap: 10px;
+}
+
+.cv-portfolio-lightbox-tool {
+    min-width: 52px;
+    height: 44px;
+    padding: 0 14px;
+    border: 0;
+    border-radius: 999px;
+    background: rgba(255, 174, 0, 0.16);
+    color: #ffcf63;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.cv-portfolio-lightbox-stage {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    border-radius: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: grab;
+}
+
+.cv-portfolio-lightbox-stage.is-dragging {
+    cursor: grabbing;
+}
+
+.cv-portfolio-lightbox-image {
+    max-width: 100%;
+    max-height: 100%;
+    transform-origin: center center;
+    will-change: transform;
+    user-select: none;
+    -webkit-user-drag: none;
+}
+
+.contact-section-area .cv-contact-static {
+    background: linear-gradient(180deg, rgba(8, 16, 28, 0.92), rgba(12, 24, 38, 0.9));
+}
+
+.contact-section-area .cv-contact-header {
+    max-width: 760px;
+}
+
+.contact-section-area .cv-contact-kicker {
+    display: inline-block;
+    padding: 8px 14px;
+    border-radius: 999px;
+    background: rgba(255, 174, 0, 0.12);
+    color: #ffcf63;
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.contact-section-area .cv-contact-header p {
+    margin: 0;
+    color: rgba(244, 247, 251, 0.8);
+    font-size: 1rem;
+    line-height: 1.75;
+}
+
+.contact-section-area .cv-contact-item {
+    height: 100%;
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 20px 18px;
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(120, 157, 196, 0.14);
+    transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+}
+
+.contact-section-area .cv-contact-item:hover {
+    transform: translateY(-3px);
+    border-color: rgba(255, 174, 0, 0.24);
+    background: rgba(255, 174, 0, 0.06);
+}
+
+.contact-section-area .cv-contact-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 14px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 174, 0, 0.14);
+    color: #ffcf63;
+    font-size: 1.05rem;
+    flex-shrink: 0;
+}
+
+.contact-section-area .cv-contact-copy {
+    min-width: 0;
+}
+
+.contact-section-area .cv-contact-label {
+    display: block;
+    margin-bottom: 6px;
+    color: rgba(144, 221, 235, 0.88);
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.contact-section-area .cv-contact-value,
+.contact-section-area .cv-contact-link {
+    display: block;
+    color: var(--ztc-text-text-1);
+    font-family: var(--ztc-family-font1);
+    font-size: 1.05rem;
+    font-weight: var(--ztc-weight-semibold);
+    line-height: 1.55;
+    text-transform: none;
+    overflow-wrap: anywhere;
+}
+
+.contact-section-area .cv-contact-link {
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.contact-section-area .cv-contact-link:hover {
+    color: #ffcf63;
+}
+
+.contact-section-area .cv-contact-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+}
+
+.contact-section-area .cv-contact-actions .vl-btn1 {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.contact-section-area .cv-contact-action-note {
+    margin: 0;
+    color: rgba(244, 247, 251, 0.72);
+    font-size: 0.96rem;
+    line-height: 1.7;
+}
+
+.cv-contact-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 10050;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.25s ease, visibility 0.25s ease;
+}
+
+.cv-contact-modal.is-open {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+.cv-contact-modal-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(3, 10, 18, 0.82);
+    backdrop-filter: blur(10px);
+}
+
+.cv-contact-modal-shell {
+    position: relative;
+    z-index: 1;
+    width: min(760px, 100%);
+    max-height: min(88vh, 920px);
+    overflow: auto;
+    padding: 32px;
+    border-radius: 24px;
+    background: linear-gradient(180deg, rgba(7, 16, 27, 0.98), rgba(10, 21, 35, 0.96));
+    border: 1px solid rgba(255, 174, 0, 0.24);
+    box-shadow: 0 28px 70px rgba(0, 0, 0, 0.42);
+}
+
+.cv-contact-modal-close {
+    position: absolute;
+    top: 18px;
+    right: 18px;
+    width: 44px;
+    height: 44px;
+    border: 0;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.08);
+    color: #f4f7fb;
+    font-size: 1.6rem;
+    line-height: 1;
+}
+
+.cv-contact-modal-view {
+    display: none;
+}
+
+.cv-contact-modal-view.is-active {
+    display: block;
+}
+
+.cv-contact-modal-kicker {
+    display: inline-block;
+    margin-bottom: 14px;
+    padding: 8px 14px;
+    border-radius: 999px;
+    background: rgba(255, 174, 0, 0.12);
+    color: #ffcf63;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.cv-contact-modal-view h3 {
+    margin: 0;
+    color: #f4f7fb;
+    font-size: clamp(1.7rem, 2.8vw, 2.4rem);
+    line-height: 1.18;
+}
+
+.cv-contact-modal-copy,
+.cv-contact-modal-note {
+    margin: 18px 0 0;
+    color: rgba(244, 247, 251, 0.8);
+    font-size: 1rem;
+    line-height: 1.72;
+}
+
+.cv-contact-modal-note strong,
+.cv-contact-modal-copy strong,
+.cv-contact-config-guide strong {
+    color: #f4f7fb;
+}
+
+.cv-contact-modal-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    margin-top: 28px;
+}
+
+.cv-contact-modal-actions-form {
+    margin-top: 22px;
+}
+
+.cv-contact-modal-primary,
+.cv-contact-modal-secondary {
+    min-height: 56px;
+}
+
+.cv-contact-modal-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.cv-contact-form {
+    margin-top: 26px;
+}
+
+.cv-contact-form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+}
+
+.cv-contact-form-group-full {
+    grid-column: 1 / -1;
+}
+
+.cv-contact-form-label {
+    display: block;
+    margin-bottom: 10px;
+    color: rgba(144, 221, 235, 0.92);
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.cv-contact-form-input {
+    width: 100%;
+    border: 1px solid rgba(120, 157, 196, 0.18);
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.05);
+    color: #f4f7fb;
+    font-size: 1rem;
+    line-height: 1.5;
+    padding: 16px 18px;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.cv-contact-form-input::placeholder {
+    color: rgba(244, 247, 251, 0.45);
+}
+
+.cv-contact-form-input:focus {
+    outline: none;
+    border-color: rgba(255, 174, 0, 0.45);
+    box-shadow: 0 0 0 3px rgba(255, 174, 0, 0.12);
+    background: rgba(255, 255, 255, 0.07);
+}
+
+.cv-contact-form-input.is-invalid {
+    border-color: rgba(255, 118, 118, 0.72);
+    box-shadow: 0 0 0 3px rgba(255, 118, 118, 0.12);
+}
+
+.cv-contact-form-textarea {
+    min-height: 180px;
+    resize: vertical;
+}
+
+.cv-contact-form-hint,
+.cv-contact-field-error,
+.cv-contact-form-status,
+.cv-contact-config-guide p {
+    margin: 10px 0 0;
+    line-height: 1.6;
+}
+
+.cv-contact-form-hint,
+.cv-contact-config-guide p {
+    color: rgba(244, 247, 251, 0.66);
+    font-size: 0.92rem;
+}
+
+.cv-contact-form-hint span,
+.cv-contact-config-guide span {
+    color: #ffcf63;
+}
+
+.cv-contact-field-error {
+    min-height: 1.4em;
+    color: #ff8f8f;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.cv-contact-form-status {
+    min-height: 1.6em;
+    color: rgba(244, 247, 251, 0.86);
+    font-size: 0.96rem;
+    font-weight: 600;
+}
+
+.cv-contact-form-status.is-success {
+    color: #9ff4ff;
+}
+
+.cv-contact-form-status.is-error {
+    color: #ff9d9d;
+}
+
+.cv-contact-modal-primary.is-loading {
+    opacity: 0.78;
+}
+
+.cv-contact-modal-primary[disabled] {
+    opacity: 0.72;
+    cursor: not-allowed;
+}
+
+.cv-contact-config-guide {
+    margin-top: 24px;
+    padding: 18px 20px;
+    border-radius: 16px;
+    background: rgba(255, 174, 0, 0.08);
+    border: 1px solid rgba(255, 174, 0, 0.14);
+}
+
 .main-hero-area5 .hero-heading-area p {
     max-width: 72ch;
 }
@@ -853,6 +1487,33 @@
     .portfolio-section-area .portfolio-boxarea2 a {
         font-size: clamp(1.2rem, 3vw, 1.45rem);
         line-height: 1.28;
+    }
+
+    .portfolio-section-area .cv-portfolio-card .img1 img {
+        aspect-ratio: 16 / 9;
+    }
+
+    .cv-portfolio-lightbox {
+        padding: 20px;
+    }
+
+    .cv-portfolio-lightbox-shell {
+        width: min(96vw, 1320px);
+        height: min(86vh, 920px);
+        padding: 68px 18px 18px;
+    }
+
+    .contact-section-area .cv-contact-item {
+        padding: 18px 16px;
+    }
+
+    .contact-section-area .cv-contact-value,
+    .contact-section-area .cv-contact-link {
+        font-size: 1rem;
+    }
+
+    .cv-contact-form-grid {
+        grid-template-columns: 1fr;
     }
 
     .contact-section-area .footer-area p {
@@ -1051,6 +1712,99 @@
 
     .contact-section-area .footer-area p {
         margin-top: 0;
+    }
+
+    .contact-section-area .cv-contact-icon {
+        width: 44px;
+        height: 44px;
+        border-radius: 12px;
+        font-size: 0.98rem;
+    }
+
+    .contact-section-area .cv-contact-value,
+    .contact-section-area .cv-contact-link {
+        font-size: 0.95rem;
+        line-height: 1.5;
+    }
+
+    .contact-section-area .cv-contact-actions .vl-btn1 {
+        width: 100%;
+    }
+
+    .portfolio-section-area .cv-portfolio-card {
+        padding: 22px;
+    }
+
+    .portfolio-section-area .cv-portfolio-card .cv-portfolio-title {
+        font-size: 1.35rem;
+    }
+
+    .portfolio-section-area .cv-portfolio-card p {
+        font-size: 0.95rem;
+        line-height: 1.65;
+    }
+
+    .portfolio-section-area .cv-portfolio-card .cv-portfolio-btn {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .cv-portfolio-lightbox {
+        padding: 14px;
+    }
+
+    .cv-portfolio-lightbox-shell {
+        width: 100%;
+        height: min(88vh, 760px);
+        padding: 70px 12px 12px;
+        border-radius: 18px;
+    }
+
+    .cv-portfolio-lightbox-toolbar {
+        left: 12px;
+        gap: 8px;
+    }
+
+    .cv-portfolio-lightbox-close {
+        top: 14px;
+        right: 14px;
+        width: 42px;
+        height: 42px;
+    }
+
+    .cv-portfolio-lightbox-tool {
+        min-width: 46px;
+        height: 40px;
+        padding: 0 12px;
+    }
+
+    .cv-contact-modal {
+        padding: 14px;
+    }
+
+    .cv-contact-modal-shell {
+        padding: 26px 18px 20px;
+        border-radius: 18px;
+    }
+
+    .cv-contact-modal-close {
+        top: 12px;
+        right: 12px;
+        width: 40px;
+        height: 40px;
+    }
+
+    .cv-contact-modal-actions {
+        flex-direction: column;
+    }
+
+    .cv-contact-modal-primary,
+    .cv-contact-modal-secondary {
+        width: 100%;
+    }
+
+    .cv-contact-form-input {
+        padding: 15px 16px;
     }
 }
 

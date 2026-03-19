@@ -767,6 +767,24 @@
     text-align: center;
 }
 
+.main-hero-area5 .personal-contact-box .btn-area1.cv-download-actions a.cv-download-btn {
+    width: min(52%, 150px);
+    min-width: 0;
+    padding: 6px 8px;
+    gap: 5px;
+    font-size: 0.52rem;
+    line-height: 1.02;
+    border-radius: 18px;
+    letter-spacing: 0.02em;
+    text-transform: none;
+}
+
+.main-hero-area5 .personal-contact-box .btn-area1.cv-download-actions a.cv-download-btn img {
+    width: 10px;
+    height: 10px;
+    margin: 0;
+}
+
 .skill-section-area .cv-skill-card-link {
     display: block;
     color: inherit;

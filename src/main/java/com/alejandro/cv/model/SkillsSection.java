@@ -9,6 +9,6 @@ public record SkillsSection(
     String highlightWord,
     List<SkillCard> items
 ) {
-    public record SkillCard(String badge, String title, String description) {
+    public record SkillCard(String badge, String title, String description, int level) {
     }
 }

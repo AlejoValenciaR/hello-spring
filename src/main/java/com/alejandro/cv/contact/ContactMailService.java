@@ -5,14 +5,14 @@ import jakarta.mail.internet.MimeMessage;
 import java.nio.charset.StandardCharsets;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.MailException;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Service
 public class ContactMailService {
@@ -76,21 +76,12 @@ public class ContactMailService {
     }
 
     private String buildMessageBody(ContactMessageRequest request) {
-        return """
-                New message received from the CV contact form.
-
-                Sender email:
-                %s
-
-                Subject:
-                %s
-
-                Message:
-                %s
-
-                Sent at:
-                %s
-                """.formatted(
+        return String.format(
+                "New message received from the CV contact form.%n%n"
+                        + "Sender email:%n%s%n%n"
+                        + "Subject:%n%s%n%n"
+                        + "Message:%n%s%n%n"
+                        + "Sent at:%n%s",
                 request.fromEmail().trim(),
                 request.subject().trim(),
                 request.message().trim(),

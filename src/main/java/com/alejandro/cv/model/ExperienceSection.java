@@ -14,6 +14,8 @@ public record ExperienceSection(
         String company,
         String location,
         String period,
+        String summary,
+        List<String> tags,
         List<String> bullets
     ) {
     }

@@ -505,7 +505,9 @@ function initContactModal() {
     const setLoading = (isLoading) => {
         submitButton.disabled = isLoading;
         submitButton.classList.toggle('is-loading', isLoading);
-        submitLabel.textContent = isLoading ? 'Sending...' : 'Send Message';
+        submitLabel.textContent = isLoading
+            ? 'Sending...'
+            : 'Send Message';
     };
 
     const setResultState = (state, message) => {
@@ -514,7 +516,9 @@ function initContactModal() {
         resultIcon.innerHTML = success
             ? '<i class="fa-solid fa-check"></i>'
             : '<i class="fa-solid fa-triangle-exclamation"></i>';
-        resultKicker.textContent = success ? 'Message Sent' : 'Message Not Sent';
+        resultKicker.textContent = success
+            ? 'Message Sent'
+            : 'Message Not Sent';
         resultTitle.textContent = success
             ? 'Your message was sent successfully.'
             : 'Your message could not be sent.';
@@ -629,7 +633,7 @@ function initContactModal() {
                         setFieldError(fieldName, String(message));
                     });
                 }
-                setResultState('error', result.message || 'The message could not be sent. Please try again.');
+                setResultState('error', result.message || 'The message could not be sent.');
                 setView('result');
                 return;
             }

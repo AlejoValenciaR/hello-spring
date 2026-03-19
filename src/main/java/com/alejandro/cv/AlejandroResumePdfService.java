@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Base64;
 import java.util.List;
+import java.util.Locale;
 
 import com.alejandro.cv.model.CvPage;
 import com.alejandro.cv.model.CompactExperienceSection;
@@ -43,9 +44,10 @@ public class AlejandroResumePdfService {
         this.templateEngine = templateEngine;
     }
 
-    public byte[] generateAlejandroResumePdf() {
-        ResumePdfDocument resume = buildResumeDocument();
-        Context context = new Context();
+    public byte[] generateAlejandroResumePdf(Locale locale) {
+        Locale pdfLocale = resolveLocale(locale);
+        ResumePdfDocument resume = buildResumeDocument(pdfLocale);
+        Context context = new Context(pdfLocale);
         context.setVariable("resume", resume);
         context.setVariable("coverSkills", sliceSkills(resume.skills().items(), 0, 3));
         context.setVariable("experienceBatchOne", slice(resume.experience().items(), 0, 3));
@@ -56,25 +58,27 @@ public class AlejandroResumePdfService {
         context.setVariable("technologyPrimary", sliceCategories(resume.technologies().categories(), 0, 3));
         context.setVariable("technologySecondary", sliceCategories(resume.technologies().categories(), 3, resume.technologies().categories().size()));
 
-        return renderPdf("cv/pdf/alejandro-resume", context, "Unable to generate Alejandro resume PDF");
+        return renderPdf(fullResumeTemplateName(pdfLocale), context, "Unable to generate Alejandro resume PDF");
     }
 
-    public byte[] generateAlejandroCompactResumePdf() {
-        ResumePdfDocument resume = buildResumeDocument();
-        CompactExperienceSection compactExperience = readSection("cv/brief-experience.json", CompactExperienceSection.class);
+    public byte[] generateAlejandroCompactResumePdf(Locale locale) {
+        Locale pdfLocale = resolveLocale(locale);
+        ResumePdfDocument resume = buildResumeDocument(pdfLocale);
+        CompactExperienceSection compactExperience =
+            readSection(localizedResourcePath("cv/brief-experience.json", pdfLocale), CompactExperienceSection.class);
 
-        Context context = new Context();
+        Context context = new Context(pdfLocale);
         context.setVariable("resume", resume);
-        context.setVariable("principalTechnologies", principalTechnologies());
+        context.setVariable("principalTechnologies", principalTechnologies(pdfLocale));
         context.setVariable("compactExperiencePageOne", sliceCompactCompanies(compactExperience.items(), 0, 4));
         context.setVariable("compactExperiencePageTwo", sliceCompactCompanies(compactExperience.items(), 4, compactExperience.items().size()));
         context.setVariable("compactGithubProjects", resume.personalProjects().items());
 
-        return renderPdf("cv/pdf/alejandro-brief-resume", context, "Unable to generate Alejandro compact resume PDF");
+        return renderPdf(compactResumeTemplateName(pdfLocale), context, "Unable to generate Alejandro compact resume PDF");
     }
 
-    private ResumePdfDocument buildResumeDocument() {
-        CvPage cvPage = cvPageService.loadAlejandroCv();
+    private ResumePdfDocument buildResumeDocument(Locale locale) {
+        CvPage cvPage = cvPageService.loadAlejandroCv(locale);
 
         return new ResumePdfDocument(
             cvPage.personalInfo(),
@@ -83,8 +87,8 @@ public class AlejandroResumePdfService {
             cvPage.skills(),
             cvPage.technologies(),
             cvPage.experience(),
-            readSection("cv/highlighted-projects.json", HighlightedProjectsSection.class),
-            readSection("cv/personal-projects.json", PersonalProjectsSection.class),
+            readSection(localizedResourcePath("cv/highlighted-projects.json", locale), HighlightedProjectsSection.class),
+            readSection(localizedResourcePath("cv/personal-projects.json", locale), PersonalProjectsSection.class),
             cvPage.education(),
             cvPage.languages(),
             cvPage.contact(),
@@ -163,7 +167,22 @@ public class AlejandroResumePdfService {
         return items.subList(safeFrom, safeTo);
     }
 
-    private List<String> principalTechnologies() {
+    private List<String> principalTechnologies(Locale locale) {
+        if (isSpanish(locale)) {
+            return List.of(
+                "Java",
+                "Spring Boot",
+                "Python",
+                "AWS",
+                "Terraform",
+                "APIs REST / SOAP",
+                "SQL / NoSQL",
+                "Docker / Kubernetes",
+                "Salesforce Marketing Cloud",
+                "Ingenieria de datos"
+            );
+        }
+
         return List.of(
             "Java",
             "Spring Boot",
@@ -176,5 +195,31 @@ public class AlejandroResumePdfService {
             "Salesforce Marketing Cloud",
             "Data Engineering"
         );
+    }
+
+    private Locale resolveLocale(Locale locale) {
+        return isSpanish(locale) ? Locale.forLanguageTag("es") : Locale.ENGLISH;
+    }
+
+    private boolean isSpanish(Locale locale) {
+        return locale != null && "es".equalsIgnoreCase(locale.getLanguage());
+    }
+
+    private String localizedResourcePath(String resourcePath, Locale locale) {
+        if (isSpanish(locale)) {
+            String localizedPath = resourcePath.replace(".json", "-es.json");
+            if (new ClassPathResource(localizedPath).exists()) {
+                return localizedPath;
+            }
+        }
+        return resourcePath;
+    }
+
+    private String fullResumeTemplateName(Locale locale) {
+        return isSpanish(locale) ? "cv/pdf/alejandro-resume-es" : "cv/pdf/alejandro-resume";
+    }
+
+    private String compactResumeTemplateName(Locale locale) {
+        return isSpanish(locale) ? "cv/pdf/alejandro-brief-resume-es" : "cv/pdf/alejandro-brief-resume";
     }
 }

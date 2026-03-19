@@ -2884,16 +2884,19 @@ Location:
     display: inline-block;
   }
 }
-.main-hero-area5 .list-group a:hover {
+.main-hero-area5 .list-group a:hover,
+.main-hero-area5 .list-group a:focus-visible {
   background: var(--ztc-bg-btn-bg1);
 }
-.main-hero-area5 .list-group a:hover span {
+.main-hero-area5 .list-group a:hover span,
+.main-hero-area5 .list-group a:focus-visible span {
   visibility: visible;
   opacity: 1;
   transition: all 0.4s;
   left: 85px;
 }
-.main-hero-area5 .list-group a:hover img {
+.main-hero-area5 .list-group a:hover img,
+.main-hero-area5 .list-group a:focus-visible img {
   filter: brightness(0);
 }
 .main-hero-area5 .list-group a.active {

@@ -2,6 +2,7 @@ package com.alejandro.cv;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Locale;
 
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
@@ -29,20 +30,30 @@ public class CvPageService {
         this.objectMapper = objectMapper;
     }
 
-    public CvPage loadAlejandroCv() {
+    public CvPage loadAlejandroCv(Locale locale) {
         return new CvPage(
-            readSection("cv/personal-info.json", PersonalInfoSection.class),
+            readSection(localizedResourcePath("cv/personal-info.json", locale), PersonalInfoSection.class),
             readSection("cv/navigation.json", NavigationSection.class),
-            readSection("cv/hero.json", HeroSection.class),
-            readSection("cv/profile.json", ProfileSection.class),
-            readSection("cv/skills.json", SkillsSection.class),
-            readSection("cv/technologies.json", TechnologiesSection.class),
-            readSection("cv/experience.json", ExperienceSection.class),
-            readSection("cv/education.json", EducationSection.class),
-            readSection("cv/languages.json", LanguagesSection.class),
+            readSection(localizedResourcePath("cv/hero.json", locale), HeroSection.class),
+            readSection(localizedResourcePath("cv/profile.json", locale), ProfileSection.class),
+            readSection(localizedResourcePath("cv/skills.json", locale), SkillsSection.class),
+            readSection(localizedResourcePath("cv/technologies.json", locale), TechnologiesSection.class),
+            readSection(localizedResourcePath("cv/experience.json", locale), ExperienceSection.class),
+            readSection(localizedResourcePath("cv/education.json", locale), EducationSection.class),
+            readSection(localizedResourcePath("cv/languages.json", locale), LanguagesSection.class),
             readSection("cv/references.json", ReferencesSection.class),
-            readSection("cv/contact.json", ContactSection.class)
+            readSection(localizedResourcePath("cv/contact.json", locale), ContactSection.class)
         );
+    }
+
+    private String localizedResourcePath(String resourcePath, Locale locale) {
+        if (locale != null && "es".equalsIgnoreCase(locale.getLanguage())) {
+            String localizedPath = resourcePath.replace(".json", "-es.json");
+            if (new ClassPathResource(localizedPath).exists()) {
+                return localizedPath;
+            }
+        }
+        return resourcePath;
     }
 
     private <T> T readSection(String resourcePath, Class<T> sectionType) {

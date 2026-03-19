@@ -4,6 +4,8 @@ import jakarta.mail.MessagingException;
 import jakarta.validation.Valid;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Locale;
+import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -19,24 +21,28 @@ import org.springframework.web.bind.annotation.RestController;
 public class ContactMessageController {
 
     private final ContactMailService contactMailService;
+    private final MessageSource messageSource;
 
-    public ContactMessageController(ContactMailService contactMailService) {
+    public ContactMessageController(ContactMailService contactMailService, MessageSource messageSource) {
         this.contactMailService = contactMailService;
+        this.messageSource = messageSource;
     }
 
     @PostMapping(path = "/send", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Map<String, Object>> sendMessage(
             @Valid @RequestBody ContactMessageRequest request,
-            BindingResult bindingResult) {
+            BindingResult bindingResult,
+            @org.springframework.web.bind.annotation.RequestParam(name = "lang", defaultValue = "en") String lang) {
+        Locale locale = "es".equalsIgnoreCase(lang) ? Locale.forLanguageTag("es") : Locale.ENGLISH;
         if (bindingResult.hasErrors()) {
-            return ResponseEntity.badRequest().body(validationErrorResponse(bindingResult));
+            return ResponseEntity.badRequest().body(validationErrorResponse(bindingResult, locale));
         }
 
         try {
-            contactMailService.send(request);
+            contactMailService.send(request, locale);
             return ResponseEntity.ok(Map.of(
                     "success", true,
-                    "message", "Your message was sent successfully."));
+                    "message", messageSource.getMessage("contact.api.success", null, locale)));
         } catch (IllegalStateException ex) {
             return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(Map.of(
                     "success", false,
@@ -44,11 +50,11 @@ public class ContactMessageController {
         } catch (MessagingException ex) {
             return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body(Map.of(
                     "success", false,
-                    "message", "The message could not be built for delivery. Please try again."));
+                    "message", messageSource.getMessage("contact.api.buildError", null, locale)));
         }
     }
 
-    private Map<String, Object> validationErrorResponse(BindingResult bindingResult) {
+    private Map<String, Object> validationErrorResponse(BindingResult bindingResult, Locale locale) {
         Map<String, String> errors = new LinkedHashMap<>();
         for (FieldError error : bindingResult.getFieldErrors()) {
             errors.putIfAbsent(error.getField(), error.getDefaultMessage());
@@ -56,7 +62,7 @@ public class ContactMessageController {
 
         return Map.of(
                 "success", false,
-                "message", "Please correct the highlighted fields and try again.",
+                "message", messageSource.getMessage("contact.api.validation", null, locale),
                 "errors", errors);
     }
 }

@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8" />
-  <title>Alejandro Valencia Rivera Compact Resume</title>
+  <title>Alejandro Valencia Rivera - Hoja de vida corta</title>
   <style>
     @page{size:A4;margin:0}html,body{margin:0;padding:0}body{font-family:"Segoe UI",Arial,sans-serif;color:#18303d;background:#fff}a{color:#1e7780;text-decoration:none}p,h1,h2,h3,h4,h5,strong,ul{margin:0}
     .resume-page{width:210mm;height:297mm;page-break-after:always;background:#fffaf5}.resume-page:last-child{page-break-after:auto}.page-layout{width:100%;height:100%;border-collapse:collapse;table-layout:fixed}.page-layout td{vertical-align:top}
@@ -26,12 +26,12 @@
   <div class="resume-page">
     <table class="page-layout"><tr>
       <td class="sidebar">
-        <img class="sidebar-photo" th:src="${resume.photoDataUri}" alt="Alejandro Valencia Rivera profile photo" />
+        <img class="sidebar-photo" th:src="${resume.photoDataUri}" alt="Foto de perfil de Alejandro Valencia Rivera" />
         <div class="sidebar-body">
           <div class="sidebar-name" th:text="${resume.personalInfo.fullName}">Alejandro Valencia Rivera</div>
           <div class="sidebar-role" th:text="${resume.personalInfo.title}">Senior Full Stack Developer | Backend-First | Java, Python, AWS, Data Engineering</div>
           <div class="sidebar-block">
-            <div class="sidebar-heading">Personal Info</div>
+            <div class="sidebar-heading">Informacion personal</div>
             <div class="fact-row" th:each="fact, factStat : ${resume.personalInfo.facts}" th:if="${factStat.index &lt; 4}">
               <span class="fact-label" th:text="${fact.label}">Email</span>
               <span class="fact-value" th:if="${fact.url == null}" th:text="${fact.value}">Cali, Colombia</span>
@@ -39,18 +39,18 @@
             </div>
           </div>
           <div class="sidebar-block">
-            <div class="sidebar-heading">Principal Technologies</div>
+            <div class="sidebar-heading">Tecnologias principales</div>
             <span class="sidebar-chip" th:each="technology : ${principalTechnologies}" th:text="${technology}">Java</span>
           </div>
           <div class="sidebar-block">
-            <div class="sidebar-heading">Languages</div>
+            <div class="sidebar-heading">Idiomas</div>
             <div class="fact-row" th:each="language : ${resume.languages.items}">
               <span class="fact-label" th:text="${language.name}">Spanish</span>
               <span class="fact-value" th:text="${language.level}">Native</span>
             </div>
           </div>
           <div class="sidebar-block">
-            <div class="sidebar-heading">Education</div>
+            <div class="sidebar-heading">Educacion</div>
             <div class="sidebar-copy" th:each="education : ${resume.education.items}">
               <strong th:text="${education.degree}">Systems Engineer</strong><br />
               <span th:text="${education.institution + ' | ' + education.period}">Universidad del Valle | 2014 - 2019</span>
@@ -60,13 +60,13 @@
       </td>
       <td class="main">
         <div class="hero-card">
-          <div class="hero-kicker">Compact Resume</div>
+          <div class="hero-kicker">Hoja de vida corta</div>
           <div class="hero-name" th:text="${resume.personalInfo.fullName}">Alejandro Valencia Rivera</div>
           <div class="hero-role" th:text="${resume.personalInfo.title}">Senior Full Stack Developer</div>
-          <div class="hero-summary">Two-page recruiter view: personal profile, main technologies, languages, education, project-driven experience, and public GitHub links.</div>
+          <div class="hero-summary">Vista corta para reclutamiento: perfil personal, tecnologias principales, idiomas, educacion, experiencia orientada a proyectos y enlaces publicos de GitHub.</div>
         </div>
         <div class="section-card">
-          <div class="card-title">Professional Experience</div>
+          <div class="card-title">Experiencia profesional</div>
           <div class="experience-group" th:each="experience : ${compactExperiencePageOne}">
             <table class="experience-head">
               <tr>
@@ -80,7 +80,7 @@
             <div class="project-list">
               <div class="project-item" th:each="project : ${experience.projects}">
                 <div class="project-name" th:text="${project.name}">Salesforce Marketing Cloud Integration</div>
-                <div class="stack-line"><strong>Stack:</strong> <span th:text="${#strings.listJoin(project.stack, ', ')}">Java, Python, AWS, Terraform</span></div>
+                <div class="stack-line"><strong>Tecnologias:</strong> <span th:text="${#strings.listJoin(project.stack, ', ')}">Java, Python, AWS, Terraform</span></div>
               </div>
             </div>
           </div>
@@ -95,10 +95,10 @@
         <div class="sidebar-body">
           <div class="continuation-mark" th:text="${resume.personalInfo.initials}">AV</div>
           <div class="continuation-name" th:text="${resume.personalInfo.fullName}">Alejandro Valencia Rivera</div>
-          <div class="continuation-role">Remaining experience and portfolio links</div>
+          <div class="continuation-role">Experiencia restante y enlaces del portafolio</div>
           <div class="continuation-divider"></div>
           <div class="sidebar-block">
-            <div class="sidebar-heading">Quick Contact</div>
+            <div class="sidebar-heading">Contacto rapido</div>
             <div class="fact-row" th:each="fact : ${resume.personalInfo.facts}">
               <span class="fact-label" th:text="${fact.label}">Email</span>
               <span class="fact-value" th:if="${fact.url == null}" th:text="${fact.value}">Cali, Colombia</span>
@@ -106,18 +106,18 @@
             </div>
           </div>
           <div class="sidebar-block">
-            <div class="sidebar-heading">Principal Technologies</div>
+            <div class="sidebar-heading">Tecnologias principales</div>
             <span class="sidebar-chip" th:each="technology, technologyStat : ${principalTechnologies}" th:if="${technologyStat.index &lt; 6}" th:text="${technology}">Java</span>
           </div>
           <div class="sidebar-block">
-            <div class="sidebar-heading">Portfolio Focus</div>
-            <div class="sidebar-copy">Public repositories emphasize infrastructure automation, cloud integration, backend delivery, and platform engineering patterns.</div>
+            <div class="sidebar-heading">Enfoque del portafolio</div>
+            <div class="sidebar-copy">Los repositorios publicos enfatizan automatizacion de infraestructura, integracion cloud, entrega backend y patrones de ingenieria de plataforma.</div>
           </div>
         </div>
       </td>
       <td class="main">
         <div class="section-card">
-          <div class="card-title">Professional Experience</div>
+          <div class="card-title">Experiencia profesional</div>
           <div class="experience-group" th:each="experience : ${compactExperiencePageTwo}">
             <table class="experience-head">
               <tr>
@@ -131,13 +131,13 @@
             <div class="project-list">
               <div class="project-item" th:each="project : ${experience.projects}">
                 <div class="project-name" th:text="${project.name}">Internal Reporting Applications</div>
-                <div class="stack-line"><strong>Stack:</strong> <span th:text="${#strings.listJoin(project.stack, ', ')}">Java, Python, Flask, Django</span></div>
+                <div class="stack-line"><strong>Tecnologias:</strong> <span th:text="${#strings.listJoin(project.stack, ', ')}">Java, Python, Flask, Django</span></div>
               </div>
             </div>
           </div>
         </div>
         <div class="section-card">
-          <div class="card-title">GitHub Projects</div>
+          <div class="card-title">Proyectos de GitHub</div>
           <div class="project-link-card" th:each="project : ${compactGithubProjects}">
             <div class="project-link-title" th:text="${project.title}">Terraform Jenkins on DigitalOcean</div>
             <div class="project-link-line"><a th:href="${project.repoUrl}" th:text="${project.repoUrl}">https://github.com/...</a></div>
@@ -149,3 +149,4 @@
   </div>
 </body>
 </html>
+

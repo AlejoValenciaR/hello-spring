@@ -5,7 +5,9 @@ import jakarta.mail.internet.MimeMessage;
 import java.nio.charset.StandardCharsets;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.MessageSource;
 import org.springframework.mail.MailException;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -25,29 +27,32 @@ public class ContactMailService {
     private final String recipientEmail;
     private final String senderEmail;
     private final String smtpHost;
+    private final MessageSource messageSource;
 
     public ContactMailService(
             JavaMailSender mailSender,
+            MessageSource messageSource,
             @Value("${app.contact.mail.to:alejo.valenciarivera@gmail.com}") String recipientEmail,
             @Value("${app.contact.mail.from:}") String senderEmail,
             @Value("${spring.mail.host:}") String smtpHost) {
         this.mailSender = mailSender;
+        this.messageSource = messageSource;
         this.recipientEmail = recipientEmail;
         this.senderEmail = senderEmail;
         this.smtpHost = smtpHost;
     }
 
-    public void send(ContactMessageRequest request) throws MessagingException {
+    public void send(ContactMessageRequest request, Locale locale) throws MessagingException {
         if (!StringUtils.hasText(smtpHost)) {
             log.error("Mail delivery is not configured: spring.mail.host is empty.");
             throw new IllegalStateException(
-                    "Mail delivery is not configured. Set MAIL_HOST together with MAIL_USERNAME and MAIL_PASSWORD.");
+                    messageSource.getMessage("contact.api.mailHostMissing", null, locale));
         }
 
         if (!StringUtils.hasText(senderEmail)) {
             log.error("Mail delivery is not configured: sender email is empty.");
             throw new IllegalStateException(
-                    "Mail delivery is not configured. Set MAIL_USERNAME, MAIL_PASSWORD, and APP_CONTACT_MAIL_FROM.");
+                    messageSource.getMessage("contact.api.senderMissing", null, locale));
         }
 
         MimeMessage mimeMessage = mailSender.createMimeMessage();
@@ -57,8 +62,8 @@ public class ContactMailService {
         helper.setTo(recipientEmail);
         helper.setFrom(senderEmail);
         helper.setReplyTo(request.fromEmail().trim());
-        helper.setSubject("[Portfolio Contact] " + request.subject().trim());
-        helper.setText(buildMessageBody(request), false);
+        helper.setSubject(messageSource.getMessage("contact.mail.subject", new Object[] { request.subject().trim() }, locale));
+        helper.setText(buildMessageBody(request, locale), false);
 
         try {
             mailSender.send(mimeMessage);
@@ -70,21 +75,20 @@ public class ContactMailService {
                     recipientEmail,
                     ex);
             throw new IllegalStateException(
-                    "The message could not be sent right now. Check the configured SMTP credentials and try again.",
+                    messageSource.getMessage("contact.api.sendFailure", null, locale),
                     ex);
         }
     }
 
-    private String buildMessageBody(ContactMessageRequest request) {
-        return String.format(
-                "New message received from the CV contact form.%n%n"
-                        + "Sender email:%n%s%n%n"
-                        + "Subject:%n%s%n%n"
-                        + "Message:%n%s%n%n"
-                        + "Sent at:%n%s",
-                request.fromEmail().trim(),
-                request.subject().trim(),
-                request.message().trim(),
-                ZonedDateTime.now().format(TIMESTAMP_FORMAT));
+    private String buildMessageBody(ContactMessageRequest request, Locale locale) {
+        return messageSource.getMessage(
+                "contact.mail.body",
+                new Object[] {
+                    request.fromEmail().trim(),
+                    request.subject().trim(),
+                    request.message().trim(),
+                    ZonedDateTime.now().format(TIMESTAMP_FORMAT)
+                },
+                locale);
     }
 }

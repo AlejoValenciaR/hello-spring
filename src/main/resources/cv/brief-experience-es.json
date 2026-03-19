@@ -1,115 +1,115 @@
 {
-  "title": "Compact professional experience",
+  "title": "Experiencia profesional resumida",
   "items": [
     {
       "company": "CINTE GROUP S.A. / Experian",
-      "role": "Technical Lead, Backend & Data Engineering",
-      "period": "Jun 2024 - Dec 2025",
+      "role": "Lider tecnico, backend e ingenieria de datos",
+      "period": "jun. 2024 - dic. 2025",
       "projects": [
         {
-          "name": "Salesforce Marketing Cloud Integration",
+          "name": "Integracion de Salesforce Marketing Cloud",
           "stack": ["Java", "Python", "AWS", "Terraform", "SFTP", "API Gateway", "Salesforce Marketing Cloud"]
         },
         {
-          "name": "MongoDB to Amazon DocumentDB Modernization",
+          "name": "Modernizacion de MongoDB hacia Amazon DocumentDB",
           "stack": ["Spring Boot", "Node.js", "Python", "MongoDB", "Amazon DocumentDB", "AWS", "Terraform"]
         },
         {
-          "name": "Ascend Transaction Monitoring",
+          "name": "Monitoreo transaccional Ascend",
           "stack": ["AWS", "BI", "Encryption", "Anonymization", "Data Pipelines"]
         }
       ]
     },
     {
-      "company": "Independent",
-      "role": "Software Consultant",
-      "period": "Jan 2024 - Jun 2024",
+      "company": "Independiente",
+      "role": "Consultor de software",
+      "period": "ene. 2024 - jun. 2024",
       "projects": [
         {
-          "name": "Traffic Fines Payment Modernization",
+          "name": "Modernizacion del pago de comparendos",
           "stack": ["Java 21", "Oracle 13c", "React", "Redis", "Secure Authentication"]
         },
         {
-          "name": "Java 21 and REST API Modernization",
+          "name": "Modernizacion Java 21 y API REST",
           "stack": ["Java", "FastAPI", "Architecture Documentation", "Payments Integration"]
         }
       ]
     },
     {
       "company": "Bold",
-      "role": "Backend Software Engineer",
-      "period": "Aug 2023 - Dec 2023",
+      "role": "Ingeniero de software backend",
+      "period": "ago. 2023 - dic. 2023",
       "projects": [
         {
-          "name": "Bold Android Banking Product Launch",
+          "name": "Lanzamiento del producto bancario Android de Bold",
           "stack": ["Python", "FastAPI", "Pydantic", "Pytest", "AWS", "MongoDB"]
         },
         {
-          "name": "Microloans and Low-Balance Backend",
+          "name": "Backend para microcreditos y cuentas de bajo monto",
           "stack": ["Java", "Python", "DDD", "DynamoDB", "REST APIs"]
         }
       ]
     },
     {
       "company": "Banco Union",
-      "role": "Tech Lead & Senior Developer Analyst",
-      "period": "Mar 2022 - Aug 2023",
+      "role": "Tech lead y analista senior de desarrollo",
+      "period": "mar. 2022 - ago. 2023",
       "projects": [
         {
-          "name": "Core Banking API Gateway",
+          "name": "API Gateway de core bancario",
           "stack": ["Java", "Spring Boot", "REST", "SOAP", "API Gateway", "Mediation Layer"]
         },
         {
-          "name": "ETL Modernization and Reporting",
+          "name": "Modernizacion ETL y reportería",
           "stack": ["AWS Glue", "Azure Data Factory", "GoAnywhere", "Power BI", "ETL"]
         },
         {
-          "name": "SARLAFT Risk and Identity Validation",
+          "name": "Validacion SARLAFT de riesgo e identidad",
           "stack": ["Java", "Python", "WildFly", "Regulatory Reporting", "Security"]
         }
       ]
     },
     {
       "company": "Banco de Occidente",
-      "role": "Senior Developer Analyst",
-      "period": "Jan 2021 - Jan 2022",
+      "role": "Analista senior de desarrollo",
+      "period": "ene. 2021 - ene. 2022",
       "projects": [
         {
-          "name": "Internal Reporting Applications",
+          "name": "Aplicaciones internas de reportería",
           "stack": ["Java", "Python", "Flask", "Django", "Reporting", "Business Data"]
         },
         {
-          "name": "Wompi Integration and FLEXCUBE Support",
+          "name": "Integracion Wompi y soporte FLEXCUBE",
           "stack": ["AWS", "Terraform", "Jenkins", "Wompi", "FLEXCUBE"]
         }
       ]
     },
     {
       "company": "Banco de Occidente",
-      "role": "Professional Analyst",
-      "period": "May 2019 - Dec 2020",
+      "role": "Analista profesional",
+      "period": "may. 2019 - dic. 2020",
       "projects": [
         {
-          "name": "FLEXCUBE Loan Portfolio Migration",
+          "name": "Migracion de cartera hacia FLEXCUBE",
           "stack": ["Oracle FLEXCUBE", "Java EE", "Jakarta EE", "Python", "Migration Rules"]
         },
         {
-          "name": "IBM DataStage ETL Pipelines",
+          "name": "Pipelines ETL con IBM DataStage",
           "stack": ["IBM DataStage", "ODS", "Oracle", "Reporting", "Portfolio Closing"]
         }
       ]
     },
     {
       "company": "Innovar Web",
-      "role": "Data Analyst",
-      "period": "Jan 2018 - Apr 2019",
+      "role": "Analista de datos",
+      "period": "ene. 2018 - abr. 2019",
       "projects": [
         {
-          "name": "3NF Database Normalization",
+          "name": "Normalizacion de base de datos a 3FN",
           "stack": ["SQL", "Database Design", "Performance Tuning"]
         },
         {
-          "name": "Latency Prediction Model",
+          "name": "Modelo predictivo de latencia",
           "stack": ["Mathematical Modeling", "Database Analytics", "Performance Monitoring"]
         }
       ]

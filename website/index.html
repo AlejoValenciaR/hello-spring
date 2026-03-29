@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title th:text="${metaTitle}">Whisper Live Subtitles</title>
+  <meta name="description" th:content="${metaDescription}" content="Free Windows subtitle overlay for live listening, transcription, and translation.">
+  <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
+  <meta name="theme-color" content="#0d1827">
+  <meta name="application-name" content="Whisper Live Subtitles">
+  <meta name="apple-mobile-web-app-title" content="Whisper Live Subtitles">
+  <link rel="canonical" th:href="${canonicalUrl}" href="/Whisper/">
+  <link rel="icon" type="image/x-icon" th:href="@{/Whisper/favicon.ico}" href="./favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" th:href="@{/Whisper/favicon-32x32.png}" href="./favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="192x192" th:href="@{/Whisper/android-chrome-192x192.png}" href="./android-chrome-192x192.png">
+  <link rel="apple-touch-icon" sizes="180x180" th:href="@{/Whisper/apple-touch-icon.png}" href="./apple-touch-icon.png">
+  <link rel="manifest" th:href="@{/Whisper/site.webmanifest}" href="./site.webmanifest">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:type" th:content="${ogType}" content="website">
+  <meta property="og:site_name" th:content="${siteName}" content="Whisper Live Subtitles">
+  <meta property="og:title" th:content="${metaTitle}" content="Whisper Live Subtitles">
+  <meta property="og:description" th:content="${metaDescription}" content="Free Windows subtitle overlay for live listening, transcription, and translation.">
+  <meta property="og:url" th:content="${pageUrl}" content="/Whisper/">
+  <meta property="og:image" th:content="${shareImageUrl}" content="./social-preview.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Whisper Live Subtitles share preview with branded W mark">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" th:content="${metaTitle}" content="Whisper Live Subtitles">
+  <meta name="twitter:description" th:content="${metaDescription}" content="Free Windows subtitle overlay for live listening, transcription, and translation.">
+  <meta name="twitter:image" th:content="${shareImageUrl}" content="./social-preview.png">
+  <meta name="twitter:image:alt" content="Whisper Live Subtitles share preview with branded W mark">
+  <link rel="preload" th:href="@{/Whisper/styles.css}" href="./styles.css" as="style">
+  <link rel="stylesheet" th:href="@{/Whisper/styles.css}" href="./styles.css">
+  <script type="application/ld+json" th:inline="javascript">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": [[${siteName}]],
+  "applicationCategory": "MultimediaApplication",
+  "operatingSystem": "Windows",
+  "url": [[${canonicalUrl}]],
+  "image": [[${shareImageUrl}]],
+  "downloadUrl": [[${setupDownloadUrl}]],
+  "softwareHelp": [[${manualUrl}]],
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "description": [[${metaDescription}]],
+  "featureList": [
+    "Live caption overlay for Windows",
+    "Transcript mode and translate mode",
+    "Local transcription with online translation support",
+    "History overlay and transcript export"
+  ]
+}
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Is it free?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. It is distributed as a free Windows app download."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does it need a GPU?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. GPU can help, but the app falls back to CPU when GPU runtime is not available."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does translation mode work offline?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Not in this version. Transcription is local, but translation currently uses an online translation step."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I save what was said?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. You can enable auto-save or export the session manually from the app."
+      }
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <div class="site-shell">
+    <header class="topbar">
+      <a class="brand" href="#top" aria-label="Whisper Live Subtitles home">
+        <span class="brand-mark">W</span>
+        <span class="brand-copy">
+          <strong>Whisper Live Subtitles</strong>
+          <span>Live captions for real listening</span>
+        </span>
+      </a>
+
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="main-nav" aria-label="Toggle navigation">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <nav id="main-nav" class="main-nav" aria-label="Main navigation">
+        <a href="#download">Download</a>
+        <a href="#about">About</a>
+        <a href="#how-to-use">How to use</a>
+        <a href="#controls">Controls</a>
+        <a href="#author">Author</a>
+      </nav>
+    </header>
+
+    <main id="main-content">
+      <div id="top"></div>
+      <section class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow">LIVE CAPTION STUDIO</p>
+          <h1>Catch the moment. Read it live.</h1>
+          <p class="hero-text">
+            Whisper Live Subtitles is a Windows app that turns spoken audio into live captions.
+            Use it for videos, online classes, meetings, language practice, and everyday listening.
+          </p>
+          <div class="hero-actions">
+            <a class="button button-primary" th:href="@{/Whisper/downloads/WhisperLiveSubtitles-Setup.exe}" href="./downloads/WhisperLiveSubtitles-Setup.exe">Download setup</a>
+            <a class="button button-ghost" th:href="@{/Whisper/manual}" href="./manual.html">Read the manual</a>
+          </div>
+          <ul class="hero-points">
+            <li>Local subtitle overlay for Windows</li>
+            <li>Transcript mode and translate mode</li>
+            <li>GPU aware, CPU fallback included</li>
+          </ul>
+        </div>
+
+        <div class="hero-panel">
+          <div class="hero-panel-card">
+            <span class="pill pill-mint">Windows app</span>
+            <span class="pill pill-blue">Free download</span>
+            <span class="pill pill-gold">Manual included</span>
+            <div class="hero-demo">
+              <p class="demo-label">What it feels like</p>
+              <div class="demo-line">"You can leave the video playing and just read along."</div>
+              <div class="demo-line">"Or switch to translate mode when you need help."</div>
+              <div class="demo-line">"Then save the session if you want a study record."</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="download" class="section">
+        <div class="section-heading">
+          <p class="eyebrow">DOWNLOAD OPTIONS</p>
+          <h2>Choose the setup that fits your day.</h2>
+          <p>
+            Install it like a regular app, launch the packaged build directly, or go to the manual first.
+          </p>
+        </div>
+
+        <div class="download-grid">
+          <article class="surface-card">
+            <h3>Installer setup</h3>
+            <p>The easiest path for most people. Install the app, create shortcuts, and uninstall cleanly later.</p>
+            <ul class="clean-list">
+              <li>Best for everyday users</li>
+              <li>Creates Start menu and desktop access</li>
+              <li>Recommended if you want the simplest experience</li>
+            </ul>
+            <a class="button button-primary" th:href="@{/Whisper/downloads/WhisperLiveSubtitles-Setup.exe}" href="./downloads/WhisperLiveSubtitles-Setup.exe">Download installer</a>
+          </article>
+
+          <article class="surface-card">
+            <h3>Portable app folder</h3>
+            <p>Open the packaged app without running the installer. Useful for testing or carrying the build between machines.</p>
+            <ul class="clean-list">
+              <li>Best for quick testing</li>
+              <li>No install wizard required</li>
+              <li>Good for advanced users</li>
+            </ul>
+            <a class="button button-secondary" th:href="@{/Whisper/downloads/WhisperLiveSubtitles.exe}" href="./downloads/WhisperLiveSubtitles.exe">Open packaged app</a>
+          </article>
+
+          <article class="surface-card">
+            <h3>Manual and setup guide</h3>
+            <p>Start here if you are not sure which buttons to use, what each option means, or how translation mode works.</p>
+            <ul class="clean-list">
+              <li>Written for non-technical users</li>
+              <li>Explains every important control</li>
+              <li>Includes tips for CPU and GPU PCs</li>
+            </ul>
+            <div class="stack-actions">
+              <a class="button button-ghost" th:href="@{/Whisper/manual}" href="./manual.html">Open web manual</a>
+              <a class="button button-ghost" th:href="@{/Whisper/Whisper-Live-Subtitles-Manual.pdf}" href="./Whisper-Live-Subtitles-Manual.pdf">Download PDF manual</a>
+            </div>
+          </article>
+        </div>
+
+        <div class="download-note">
+          <p><strong>Good to know:</strong> transcription works locally on the device. Translation mode currently needs internet access for the translation step.</p>
+        </div>
+      </section>
+
+      <section id="about" class="section section-alt">
+        <div class="section-heading">
+          <p class="eyebrow">WHAT IS IT</p>
+          <h2>A subtitle desk for people who actually need the words.</h2>
+        </div>
+
+        <div class="feature-grid">
+          <article class="feature-card">
+            <h3>Transcript mode</h3>
+            <p>Listen to audio and show it as text in the same language. Great for English study, interviews, lessons, and meetings.</p>
+          </article>
+          <article class="feature-card">
+            <h3>Translate mode</h3>
+            <p>Listen in one language and show the result in another. Useful when you want support without leaving the live flow.</p>
+          </article>
+          <article class="feature-card">
+            <h3>Floating overlay</h3>
+            <p>Keep the captions in a separate window so you can follow the text while your video, class, or meeting keeps running.</p>
+          </article>
+          <article class="feature-card">
+            <h3>History and export</h3>
+            <p>Keep a floating history window and save a transcript session when you want to study later or review key phrases.</p>
+          </article>
+          <article class="feature-card">
+            <h3>Machine-aware setup</h3>
+            <p>The app reads the PC and suggests a starting preset so weaker machines stay usable and stronger machines get cleaner text.</p>
+          </article>
+          <article class="feature-card">
+            <h3>GPU when available</h3>
+            <p>If the right NVIDIA runtime is present, the app can use GPU acceleration. If not, it falls back to CPU automatically.</p>
+          </article>
+        </div>
+      </section>
+
+      <section id="how-to-use" class="section">
+        <div class="section-heading">
+          <p class="eyebrow">HOW TO USE IT</p>
+          <h2>Six simple steps from silent screen to readable captions.</h2>
+        </div>
+
+        <div class="steps-grid">
+          <article class="step-card">
+            <span class="step-index">01</span>
+            <h3>Install or open the app</h3>
+            <p>Use the installer if you want the smoothest experience. Open the packaged app if you only want to test quickly.</p>
+          </article>
+          <article class="step-card">
+            <span class="step-index">02</span>
+            <h3>Pick the source</h3>
+            <p>Choose system audio for videos and calls, microphone for speaking practice, or both if you want to capture each side.</p>
+          </article>
+          <article class="step-card">
+            <span class="step-index">03</span>
+            <h3>Choose Transcript or Translate</h3>
+            <p>Transcript keeps the same language. Translate listens in one language and shows the result in another.</p>
+          </article>
+          <article class="step-card">
+            <span class="step-index">04</span>
+            <h3>Set the languages</h3>
+            <p>Choose the source language you expect to hear. If you are translating, choose the target language you want to read.</p>
+          </article>
+          <article class="step-card">
+            <span class="step-index">05</span>
+            <h3>Pick the speed and quality balance</h3>
+            <p>Fast is lighter, Balanced is the default sweet spot, and Accurate is cleaner but slower on weaker machines.</p>
+          </article>
+          <article class="step-card">
+            <span class="step-index">06</span>
+            <h3>Preview, then start</h3>
+            <p>Check the overlay position first, then start the session and let the app handle the caption flow in the background.</p>
+          </article>
+        </div>
+      </section>
+
+      <section id="controls" class="section section-alt">
+        <div class="section-heading">
+          <p class="eyebrow">CONTROL GUIDE</p>
+          <h2>What each main option actually does.</h2>
+          <p>No jargon, just the decision you need to make.</p>
+        </div>
+
+        <div class="controls-grid">
+          <article class="control-card">
+            <h3>Source</h3>
+            <p>Choose where the sound comes from: the PC, the microphone, or both.</p>
+          </article>
+          <article class="control-card">
+            <h3>Mode</h3>
+            <p>Choose Transcript to keep the spoken language, or Translate to read it in a different language.</p>
+          </article>
+          <article class="control-card">
+            <h3>Source language</h3>
+            <p>Tell the app what language it should expect. This usually helps quality.</p>
+          </article>
+          <article class="control-card">
+            <h3>Target language</h3>
+            <p>Only used in Translate mode. This is the language you want to read.</p>
+          </article>
+          <article class="control-card">
+            <h3>Preset</h3>
+            <p>Fast, Balanced, or Accurate. Think of it as speed versus polish.</p>
+          </article>
+          <article class="control-card">
+            <h3>Model</h3>
+            <p>The speech model behind the captions. Larger models are usually cleaner, but also heavier.</p>
+          </article>
+          <article class="control-card">
+            <h3>Voice cleanup</h3>
+            <p>Improves rough or noisy audio before transcription. Light is the safest default. Strong is for harder audio.</p>
+          </article>
+          <article class="control-card">
+            <h3>History overlay</h3>
+            <p>Shows recent caption blocks in a separate floating window.</p>
+          </article>
+          <article class="control-card">
+            <h3>Auto-save transcript</h3>
+            <p>Writes each block to a file while the session is running.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-heading">
+          <p class="eyebrow">SETUP TIPS</p>
+          <h2>Best starting setups for common situations.</h2>
+        </div>
+
+        <div class="tips-grid">
+          <article class="tip-card">
+            <h3>Watching English videos</h3>
+            <p><strong>Source:</strong> System audio<br><strong>Mode:</strong> Transcript<br><strong>Language:</strong> English<br><strong>Preset:</strong> Balanced</p>
+          </article>
+          <article class="tip-card">
+            <h3>Understanding a meeting in another language</h3>
+            <p><strong>Source:</strong> System audio<br><strong>Mode:</strong> Translate<br><strong>Source:</strong> The spoken language<br><strong>Target:</strong> Your reading language</p>
+          </article>
+          <article class="tip-card">
+            <h3>Speaking practice</h3>
+            <p><strong>Source:</strong> Microphone<br><strong>Mode:</strong> Transcript<br><strong>Language:</strong> Your speaking language<br><strong>Preset:</strong> Fast or Balanced</p>
+          </article>
+          <article class="tip-card">
+            <h3>Older or weaker PC</h3>
+            <p><strong>Preset:</strong> Fast<br><strong>Voice cleanup:</strong> Off or Light<br><strong>Recommendation:</strong> Use machine suggestion first</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section section-alt faq-section">
+        <div class="section-heading">
+          <p class="eyebrow">FAQ</p>
+          <h2>Quick answers before you install.</h2>
+        </div>
+
+        <div class="faq-list">
+          <details class="faq-item" open>
+            <summary>Is it free?</summary>
+            <p>Yes. It is distributed as a free Windows app download.</p>
+          </details>
+          <details class="faq-item">
+            <summary>Does it need a GPU?</summary>
+            <p>No. GPU can help, but the app falls back to CPU when GPU runtime is not available.</p>
+          </details>
+          <details class="faq-item">
+            <summary>Does translation mode work offline?</summary>
+            <p>Not in this version. Transcription is local, but translation currently uses an online translation step.</p>
+          </details>
+          <details class="faq-item">
+            <summary>Can I save what was said?</summary>
+            <p>Yes. You can enable auto-save or export the session manually from the app.</p>
+          </details>
+        </div>
+      </section>
+
+      <section id="author" class="section author-section">
+        <div class="author-card">
+          <div>
+            <p class="eyebrow">AUTHOR</p>
+            <h2>Whisper Live Subtitles</h2>
+            <p>
+              A Windows-first caption tool built for people who need live text while they watch, listen, study, or work.
+            </p>
+          </div>
+        <div class="author-actions">
+            <a class="button button-primary" th:href="@{/Whisper/downloads/WhisperLiveSubtitles-Setup.exe}" href="./downloads/WhisperLiveSubtitles-Setup.exe">Download free setup</a>
+            <a class="button button-ghost" th:href="@{/Whisper/Whisper-Live-Subtitles-Manual.pdf}" href="./Whisper-Live-Subtitles-Manual.pdf">Get the PDF manual</a>
+        </div>
+      </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p>Whisper Live Subtitles. Free Windows caption software.</p>
+      <p><span id="year" th:text="${currentYear}"></span> &bull; Designed for live listening.</p>
+    </footer>
+  </div>
+
+  <script th:src="@{/Whisper/script.js}" src="./script.js"></script>
+</body>
+</html>

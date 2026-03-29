@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title th:text="${metaTitle}">Whisper Live Subtitles Manual</title>
+  <meta name="description" th:content="${metaDescription}" content="Beginner-friendly manual for Whisper Live Subtitles.">
+  <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
+  <meta name="theme-color" content="#0d1827">
+  <link rel="canonical" th:href="${canonicalUrl}" href="/Whisper/manual">
+  <link rel="icon" type="image/x-icon" th:href="@{/Whisper/favicon.ico}" href="./favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" th:href="@{/Whisper/favicon-32x32.png}" href="./favicon-32x32.png">
+  <link rel="apple-touch-icon" sizes="180x180" th:href="@{/Whisper/apple-touch-icon.png}" href="./apple-touch-icon.png">
+  <link rel="manifest" th:href="@{/Whisper/site.webmanifest}" href="./site.webmanifest">
+  <link rel="alternate" type="application/pdf" th:href="${pdfManualUrl}" href="./Whisper-Live-Subtitles-Manual.pdf">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:type" th:content="${ogType}" content="article">
+  <meta property="og:site_name" th:content="${siteName}" content="Whisper Live Subtitles">
+  <meta property="og:title" th:content="${metaTitle}" content="Whisper Live Subtitles Manual">
+  <meta property="og:description" th:content="${metaDescription}" content="Beginner-friendly manual for Whisper Live Subtitles.">
+  <meta property="og:url" th:content="${pageUrl}" content="/Whisper/manual">
+  <meta property="og:image" th:content="${shareImageUrl}" content="./social-preview.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Whisper Live Subtitles share preview with branded W mark">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" th:content="${metaTitle}" content="Whisper Live Subtitles Manual">
+  <meta name="twitter:description" th:content="${metaDescription}" content="Beginner-friendly manual for Whisper Live Subtitles.">
+  <meta name="twitter:image" th:content="${shareImageUrl}" content="./social-preview.png">
+  <meta name="twitter:image:alt" content="Whisper Live Subtitles share preview with branded W mark">
+  <link rel="stylesheet" th:href="@{/Whisper/manual.css}" href="./manual.css">
+  <script type="application/ld+json" th:inline="javascript">
+{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "headline": [[${metaTitle}]],
+  "description": [[${metaDescription}]],
+  "mainEntityOfPage": [[${canonicalUrl}]],
+  "url": [[${canonicalUrl}]],
+  "image": [[${shareImageUrl}]],
+  "isPartOf": {
+    "@type": "WebSite",
+    "name": [[${siteName}]],
+    "url": [[${homeUrl}]]
+  },
+  "about": {
+    "@type": "SoftwareApplication",
+    "name": [[${siteName}]],
+    "operatingSystem": "Windows"
+  }
+}
+  </script>
+</head>
+<body>
+  <a class="skip-link" href="#manual-content">Skip to manual</a>
+  <main id="manual-content" class="manual-shell">
+    <section class="cover">
+      <a class="back-link" th:href="@{/Whisper/}" href="./index.html">Back to the main site</a>
+      <div class="cover-badge">Beginner manual</div>
+      <h1>Whisper Live Subtitles</h1>
+      <p class="cover-subtitle">A clear guide for people who want live captions without learning technical words first.</p>
+      <div class="cover-meta">
+        <span>Windows subtitle overlay</span>
+        <span>Transcript + Translate</span>
+        <span>PDF + Web guide</span>
+      </div>
+    </section>
+
+    <section class="intro card">
+      <div>
+        <p class="eyebrow">What this app is for</p>
+        <h2>Read what you hear while the audio keeps playing.</h2>
+      </div>
+      <p>
+        Whisper Live Subtitles listens to audio from your computer or microphone and shows it as live text.
+        You can use it to understand videos, online classes, meetings, podcasts, or your own speaking practice.
+      </p>
+      <p>
+        The app has two main modes:
+      </p>
+      <ul>
+        <li><strong>Transcript:</strong> hear a language and show the same language as text.</li>
+        <li><strong>Translate:</strong> hear one language and show the result in another language.</li>
+      </ul>
+    </section>
+
+    <section class="toc card">
+      <p class="eyebrow">Contents</p>
+      <div class="toc-grid">
+        <a href="#quick-start">1. Quick start</a>
+        <a href="#main-window">2. Main window</a>
+        <a href="#modes">3. Transcript and Translate</a>
+        <a href="#controls">4. What each control means</a>
+        <a href="#presets">5. Best presets to choose</a>
+        <a href="#history">6. History and saving</a>
+        <a href="#gpu">7. GPU and CPU notes</a>
+        <a href="#troubleshooting">8. Troubleshooting</a>
+      </div>
+    </section>
+
+    <section id="quick-start" class="card">
+      <p class="eyebrow">Quick start</p>
+      <h2>Use the app in five easy steps.</h2>
+      <ol class="steps-list">
+        <li>Open the app.</li>
+        <li>Choose <strong>Source</strong>: system audio, microphone, or both.</li>
+        <li>Choose <strong>Mode</strong>: Transcript or Translate.</li>
+        <li>Pick the language settings and a preset.</li>
+        <li>Use <strong>Preview overlay</strong>, then press <strong>Start session</strong>.</li>
+      </ol>
+      <div class="callout">
+        <strong>Recommended first run:</strong> start with <strong>Source: System audio</strong>, <strong>Mode: Transcript</strong>, <strong>Language: English</strong>, <strong>Preset: Balanced</strong>, and <strong>Voice cleanup: Light</strong>.
+      </div>
+    </section>
+
+    <section id="main-window" class="card">
+      <p class="eyebrow">Main window</p>
+      <h2>What you are looking at.</h2>
+      <div class="info-grid">
+        <article>
+          <h3>Left side</h3>
+          <p>This is where you choose how the app should listen and how it should display the results.</p>
+        </article>
+        <article>
+          <h3>Right side</h3>
+          <p>This area shows runtime status, the machine suggestion, and a quick summary of your current setup.</p>
+        </article>
+        <article>
+          <h3>Floating overlay</h3>
+          <p>This is the subtitle window that stays on top while your video or meeting keeps running.</p>
+        </article>
+        <article>
+          <h3>History overlay</h3>
+          <p>This is a separate floating window for recent blocks. Use it only if you want to read back a few recent lines.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="modes" class="card">
+      <p class="eyebrow">Modes</p>
+      <h2>Transcript or Translate?</h2>
+      <div class="compare-grid">
+        <article>
+          <h3>Transcript</h3>
+          <p>Use this when you want the same language as the spoken audio.</p>
+          <ul>
+            <li>Best for language study</li>
+            <li>Best for listening practice</li>
+            <li>Keeps the original language</li>
+          </ul>
+        </article>
+        <article>
+          <h3>Translate</h3>
+          <p>Use this when you want to read a different language than the one you hear.</p>
+          <ul>
+            <li>Best for support during meetings or classes</li>
+            <li>You choose a source language and a target language</li>
+            <li>Needs internet for the translation step in this version</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section id="controls" class="card">
+      <p class="eyebrow">Controls</p>
+      <h2>What each option means in plain language.</h2>
+      <div class="control-table">
+        <div class="row">
+          <div class="name">Source</div>
+          <div class="desc">Choose where the sound comes from. Most people use <strong>System audio</strong> for videos and meetings.</div>
+        </div>
+        <div class="row">
+          <div class="name">Mode</div>
+          <div class="desc">Choose whether the app should transcribe or translate.</div>
+        </div>
+        <div class="row">
+          <div class="name">Source language</div>
+          <div class="desc">The language you expect to hear. If you know it, selecting it usually helps quality.</div>
+        </div>
+        <div class="row">
+          <div class="name">Target language</div>
+          <div class="desc">Only used in Translate mode. This is the language you want to read.</div>
+        </div>
+        <div class="row">
+          <div class="name">Preset</div>
+          <div class="desc"><strong>Fast</strong> is lighter, <strong>Balanced</strong> is the best default, <strong>Accurate</strong> is cleaner but slower.</div>
+        </div>
+        <div class="row">
+          <div class="name">Model</div>
+          <div class="desc">The speech model. Bigger models are often cleaner, but they also need more time and more hardware.</div>
+        </div>
+        <div class="row">
+          <div class="name">Voice cleanup</div>
+          <div class="desc"><strong>Off</strong> leaves the audio mostly untouched. <strong>Light</strong> is the recommended default. <strong>Strong</strong> helps in noisy audio.</div>
+        </div>
+        <div class="row">
+          <div class="name">Preview overlay</div>
+          <div class="desc">Shows the floating captions window so you can place it before going live.</div>
+        </div>
+        <div class="row">
+          <div class="name">History overlay</div>
+          <div class="desc">Shows recent transcript blocks in a separate floating window.</div>
+        </div>
+        <div class="row">
+          <div class="name">Auto-save transcript</div>
+          <div class="desc">Writes each block to a file during the session.</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="presets" class="card">
+      <p class="eyebrow">Preset guide</p>
+      <h2>Which preset should you pick?</h2>
+      <div class="preset-grid">
+        <article>
+          <h3>Fast</h3>
+          <p>Best when your PC is older or you want lighter processing.</p>
+        </article>
+        <article>
+          <h3>Balanced</h3>
+          <p>The best starting point for most people. Good mix of speed and readability.</p>
+        </article>
+        <article>
+          <h3>Accurate</h3>
+          <p>Use this when your PC is stronger and you want cleaner results, especially for study sessions.</p>
+        </article>
+      </div>
+      <div class="callout">
+        If you are not sure, use <strong>Apply recommendation</strong>. The app reads your computer and suggests a safer starting point.
+      </div>
+    </section>
+
+    <section id="history" class="card">
+      <p class="eyebrow">History and saving</p>
+      <h2>How to keep what was said.</h2>
+      <ul>
+        <li><strong>History overlay:</strong> shows recent blocks in a floating window.</li>
+        <li><strong>Auto-save transcript:</strong> writes blocks to disk while the session is running.</li>
+        <li><strong>Save session:</strong> exports the full current session when you want to keep it.</li>
+        <li><strong>Clear history:</strong> resets the current transcript list inside the app.</li>
+      </ul>
+    </section>
+
+    <section id="gpu" class="card">
+      <p class="eyebrow">Hardware notes</p>
+      <h2>GPU or CPU?</h2>
+      <p>
+        The app tries to use the best runtime it can find. If the right NVIDIA CUDA runtime is available, the app can use the GPU. If not, it falls back to CPU.
+      </p>
+      <ul>
+        <li><strong>CPU only:</strong> the app still works.</li>
+        <li><strong>GPU available:</strong> the app can process heavier models more comfortably.</li>
+        <li><strong>No need to guess:</strong> the runtime area in the app tells you what is active.</li>
+      </ul>
+    </section>
+
+    <section id="troubleshooting" class="card">
+      <p class="eyebrow">Troubleshooting</p>
+      <h2>When something does not look right.</h2>
+      <div class="control-table">
+        <div class="row">
+          <div class="name">No text appears</div>
+          <div class="desc">Check the source, verify that audio is actually playing, and try <strong>Preview overlay</strong> to confirm the subtitle window is visible.</div>
+        </div>
+        <div class="row">
+          <div class="name">Text is too slow</div>
+          <div class="desc">Try <strong>Balanced</strong> or <strong>Fast</strong>, or reduce cleanup from <strong>Strong</strong> to <strong>Light</strong>.</div>
+        </div>
+        <div class="row">
+          <div class="name">Words are not exact</div>
+          <div class="desc">Choose the correct source language, use a stronger preset if your PC can handle it, and avoid noisy audio when possible.</div>
+        </div>
+        <div class="row">
+          <div class="name">Translation does not appear</div>
+          <div class="desc">Make sure <strong>Mode</strong> is set to <strong>Translate</strong> and that you have selected a target language. This mode also needs internet access.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="card closing">
+      <p class="eyebrow">Final note</p>
+      <h2>Start simple, then tune later.</h2>
+      <p>
+        You do not need to understand every setting on day one. Start with a safe preset, confirm the source, and let the app do the rest. Once it feels good, you can try stronger models, history saving, or translation mode.
+      </p>
+    </section>
+  </main>
+</body>
+</html>

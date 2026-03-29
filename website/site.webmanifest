@@ -1,0 +1,22 @@
+{
+  "name": "Whisper Live Subtitles",
+  "short_name": "Whisper Live",
+  "description": "Free Windows subtitle overlay for live listening, transcription, and translation.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#0d1827",
+  "theme_color": "#0d1827",
+  "icons": [
+    {
+      "src": "./android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "./android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

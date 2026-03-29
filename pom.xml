@@ -47,6 +47,34 @@
 	</dependencies>
 
 	<build>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+			</resource>
+			<resource>
+				<directory>website</directory>
+				<targetPath>templates/website</targetPath>
+				<includes>
+					<include>*.html</include>
+				</includes>
+			</resource>
+			<resource>
+				<directory>website</directory>
+				<targetPath>static/Whisper</targetPath>
+				<excludes>
+					<exclude>*.html</exclude>
+					<exclude>*.ps1</exclude>
+				</excludes>
+			</resource>
+			<resource>
+				<directory>website</directory>
+				<targetPath>static/website</targetPath>
+				<excludes>
+					<exclude>*.html</exclude>
+					<exclude>*.ps1</exclude>
+				</excludes>
+			</resource>
+		</resources>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>

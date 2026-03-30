@@ -12,6 +12,27 @@ command_exists() {
   command -v "$1" >/dev/null 2>&1
 }
 
+dump_rollout_diagnostics() {
+  echo "Rollout did not finish within ${ROLLOUT_TIMEOUT}. Collecting Kubernetes diagnostics..." >&2
+  kubectl_cli -n "${K8S_NAMESPACE}" get deployment "${APP_NAME}" -o wide >&2 || true
+  kubectl_cli -n "${K8S_NAMESPACE}" get pods -l "app=${APP_NAME}" -o wide >&2 || true
+  kubectl_cli -n "${K8S_NAMESPACE}" describe deployment "${APP_NAME}" >&2 || true
+
+  local pod_names=""
+  pod_names="$(kubectl_cli -n "${K8S_NAMESPACE}" get pods -l "app=${APP_NAME}" -o jsonpath='{range .items[*]}{.metadata.name}{"\n"}{end}' 2>/dev/null || true)"
+  if [[ -z "${pod_names}" ]]; then
+    return
+  fi
+
+  while IFS= read -r pod_name; do
+    [[ -n "${pod_name}" ]] || continue
+    echo "---- describe pod/${pod_name} ----" >&2
+    kubectl_cli -n "${K8S_NAMESPACE}" describe pod "${pod_name}" >&2 || true
+    echo "---- logs pod/${pod_name} ----" >&2
+    kubectl_cli -n "${K8S_NAMESPACE}" logs "${pod_name}" --tail=200 >&2 || true
+  done <<< "${pod_names}"
+}
+
 is_remote_endpoint() {
   ! printf '%s\n' "$1" | grep -Eq '^https?://(localhost|127\.0\.0\.1)(:[0-9]+)?(/|$)'
 }
@@ -163,6 +184,7 @@ KUBECONFIG_CONTAINER_PATH="${WORKSPACE_MOUNT_PATH}/.kube/config"
 TMP_DIR="${WORK_DIR}/.tmp-localstack-eks"
 AWS_DOCKER_IMAGE="${AWS_DOCKER_IMAGE:-amazon/aws-cli:2.15.57}"
 KUBECTL_DOCKER_IMAGE="${KUBECTL_DOCKER_IMAGE:-bitnami/kubectl:1.32.2}"
+ROLLOUT_TIMEOUT="${ROLLOUT_TIMEOUT:-300s}"
 
 trap 'rm -rf "${TMP_DIR}"' EXIT
 
@@ -307,7 +329,10 @@ kubectl_cli apply -f "${TMP_DIR}/service.yaml"
 kubectl_cli apply -f "${TMP_DIR}/ingress.yaml"
 
 echo "Waiting for rollout..."
-kubectl_cli -n "${K8S_NAMESPACE}" rollout status deployment "${APP_NAME}" --timeout=180s
+if ! kubectl_cli -n "${K8S_NAMESPACE}" rollout status deployment "${APP_NAME}" --timeout="${ROLLOUT_TIMEOUT}"; then
+  dump_rollout_diagnostics
+  exit 1
+fi
 
 echo "Deployment completed."
 echo "Namespace: ${K8S_NAMESPACE}"

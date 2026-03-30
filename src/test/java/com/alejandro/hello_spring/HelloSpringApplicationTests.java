@@ -76,4 +76,11 @@ class HelloSpringApplicationTests {
             .andExpect(content().string(containsString("<loc>http://localhost/Whisper/</loc>")))
             .andExpect(content().string(containsString("<loc>http://localhost/Whisper/manual</loc>")));
     }
+
+    @Test
+    void websiteAliasStaticResourcesResolveWithoutDuplicatePackaging() throws Exception {
+        mockMvc.perform(get("/website/site.webmanifest"))
+            .andExpect(status().isOk())
+            .andExpect(content().string(containsString("Whisper Live")));
+    }
 }

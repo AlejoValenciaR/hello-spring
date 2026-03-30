@@ -24,13 +24,96 @@ render_template() {
   local input_file="$1"
   local output_file="$2"
 
-  sed \
-    -e "s|__APP_NAME__|${APP_NAME}|g" \
-    -e "s|__IMAGE__|${IMAGE_URI}|g" \
-    -e "s|__NAMESPACE__|${K8S_NAMESPACE}|g" \
-    -e "s|__APP_ROUTE__|${APP_ROUTE}|g" \
-    -e "s|__INGRESS_PATH__|${INGRESS_PATH}|g" \
+  awk \
+    -v app_name="${APP_NAME}" \
+    -v image_uri="${IMAGE_URI}" \
+    -v namespace="${K8S_NAMESPACE}" \
+    -v app_route="${APP_ROUTE}" \
+    -v ingress_rules="${INGRESS_RULES}" \
+    '
+      {
+        gsub(/__APP_NAME__/, app_name)
+        gsub(/__IMAGE__/, image_uri)
+        gsub(/__NAMESPACE__/, namespace)
+        gsub(/__APP_ROUTE__/, app_route)
+
+        if ($0 ~ /__INGRESS_RULES__/) {
+          printf "%s", ingress_rules
+          next
+        }
+
+        print
+      }
+    ' \
     "$input_file" > "$output_file"
+}
+
+trim_line() {
+  printf '%s' "$1" | sed 's/^[[:space:]]*//; s/[[:space:]]*$//'
+}
+
+load_ingress_paths() {
+  if [[ -n "${INGRESS_PATHS:-}" ]]; then
+    printf '%s\n' "${INGRESS_PATHS}" | tr ',' '\n'
+    return
+  fi
+
+  if [[ -n "${INGRESS_PATH:-}" ]]; then
+    printf '%s\n' "${INGRESS_PATH}"
+    return
+  fi
+
+  if [[ -f "${INGRESS_PATHS_FILE}" ]]; then
+    cat "${INGRESS_PATHS_FILE}"
+    return
+  fi
+
+  cat <<'EOF'
+/Whisper
+EOF
+}
+
+build_ingress_rules() {
+  local raw_paths="$1"
+  local line=""
+  local trimmed=""
+  local rules=""
+  declare -A seen=()
+
+  while IFS= read -r line; do
+    trimmed="$(trim_line "${line}")"
+    [[ -n "${trimmed}" ]] || continue
+    [[ "${trimmed}" != \#* ]] || continue
+
+    if [[ "${trimmed}" != /* ]]; then
+      echo "Ingress path must start with '/': ${trimmed}" >&2
+      exit 1
+    fi
+
+    if [[ -n "${seen[${trimmed}]:-}" ]]; then
+      continue
+    fi
+    seen["${trimmed}"]=1
+
+    rules+=$(cat <<EOF
+          - path: ${trimmed}
+            pathType: Prefix
+            backend:
+              service:
+                name: __APP_NAME__
+                port:
+                  number: 80
+EOF
+)
+    rules+=$'\n'
+  done <<< "${raw_paths}"
+
+  [[ -n "${rules}" ]] || {
+    echo "No ingress paths were configured. Set INGRESS_PATHS or populate ${INGRESS_PATHS_FILE}." >&2
+    exit 1
+  }
+
+  printf '%s' "${rules}"
 }
 
 print_remote_localstack_requirements() {
@@ -46,13 +129,16 @@ Required LocalStack settings on the Azure VM:
 Required Docker port publish on the Azure VM LocalStack container:
   -p 127.0.0.1:8081:8081
 
-Required Nginx route on the Azure VM:
-  / -> http://127.0.0.1:8081
+Required Nginx public gateway routes on the Azure VM:
+  Proxy the Whisper app paths to http://127.0.0.1:8081
+  Keep / on the static hub
+  Suggested source of truth for this app: ${INGRESS_PATHS_FILE}
 EOF
 }
 
 require_command docker
 require_command sed
+require_command awk
 
 : "${AWS_ACCESS_KEY_ID:?AWS_ACCESS_KEY_ID is required}"
 : "${AWS_SECRET_ACCESS_KEY:?AWS_SECRET_ACCESS_KEY is required}"
@@ -64,9 +150,9 @@ EKS_CLUSTER_NAME="${EKS_CLUSTER_NAME:-localstack-eks-cluster}"
 EKS_NODEGROUP_NAME="${EKS_NODEGROUP_NAME:-localstack-eks-node-group}"
 K8S_NAMESPACE="${K8S_NAMESPACE:-hello-spring}"
 LS_ENDPOINT_URL="${LS_ENDPOINT_URL:-https://localstack.nauthappstest.tech}"
-APP_ROUTE="${APP_ROUTE:-/}"
-INGRESS_PATH="${INGRESS_PATH:-/}"
-PUBLIC_APP_URL="${PUBLIC_APP_URL:-https://nauthappstest.tech/}"
+APP_ROUTE="${APP_ROUTE:-/Whisper/}"
+INGRESS_PATHS_FILE="${INGRESS_PATHS_FILE:-k8s/ingress-paths.txt}"
+PUBLIC_APP_URL="${PUBLIC_APP_URL:-https://nauthappstest.tech/Whisper/}"
 SHORT_SHA="$(git rev-parse --short HEAD 2>/dev/null || echo local)"
 IMAGE_TAG="${IMAGE_TAG:-${BUILD_NUMBER:-manual}-${SHORT_SHA}}"
 WORK_DIR="${WORKSPACE:-$(pwd)}"
@@ -82,6 +168,10 @@ trap 'rm -rf "${TMP_DIR}"' EXIT
 
 export AWS_DEFAULT_REGION="${AWS_REGION}"
 export KUBECONFIG="${KUBECONFIG_FILE}"
+
+INGRESS_PATHS_RAW="$(load_ingress_paths)"
+INGRESS_RULES="$(build_ingress_rules "${INGRESS_PATHS_RAW}")"
+INGRESS_RULES="${INGRESS_RULES//__APP_NAME__/${APP_NAME}}"
 
 mkdir -p "${KUBECONFIG_DIR}"
 rm -rf "${TMP_DIR}"
@@ -222,4 +312,6 @@ kubectl_cli -n "${K8S_NAMESPACE}" rollout status deployment "${APP_NAME}" --time
 echo "Deployment completed."
 echo "Namespace: ${K8S_NAMESPACE}"
 echo "Image: ${IMAGE_URI}"
+echo "Ingress path prefixes:"
+printf '%s\n' "${INGRESS_PATHS_RAW}" | sed '/^[[:space:]]*#/d; /^[[:space:]]*$/d; s/^/  - /'
 echo "Expected public URL after Azure VM ingress wiring: ${PUBLIC_APP_URL}"

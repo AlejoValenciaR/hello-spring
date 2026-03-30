@@ -22,9 +22,9 @@ pipeline {
     EKS_CLUSTER_NAME        = 'localstack-eks-cluster'
     EKS_NODEGROUP_NAME      = 'localstack-eks-node-group'
     K8S_NAMESPACE           = 'hello-spring'
-    APP_ROUTE               = '/'
-    INGRESS_PATH            = '/'
-    PUBLIC_APP_URL          = 'https://nauthappstest.tech/'
+    APP_ROUTE               = '/Whisper/'
+    INGRESS_PATHS_FILE      = 'k8s/ingress-paths.txt'
+    PUBLIC_APP_URL          = 'https://nauthappstest.tech/Whisper/'
   }
 
   stages {

@@ -9,10 +9,4 @@ spec:
   rules:
     - http:
         paths:
-          - path: __INGRESS_PATH__
-            pathType: Prefix
-            backend:
-              service:
-                name: __APP_NAME__
-                port:
-                  number: 80
+__INGRESS_RULES__
